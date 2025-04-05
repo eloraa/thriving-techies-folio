@@ -9,12 +9,12 @@ import { Team } from '@/components/main/team/team';
 export default function Home() {
   return (
     <>
-      <Banner />
+      {/* <Banner />
       <Marquee items={['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Tailwind', 'PHP', 'Laravel', 'WordPress', 'Java', 'PostgreSQL']} />
       <About />
       <Team />
       <Showcase />
-      <BlogSection />
+      <BlogSection /> */}
       <Orange />
 
       <div className="h-[200vh] flex items-center justify-center">TEMP</div>

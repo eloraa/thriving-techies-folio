@@ -23,23 +23,21 @@ export const Orange = () => {
     model: THREE.Object3D | null;
   } | null>(null);
 
-  // Color animation state
   const colorState = useRef({
     time: 0,
-    duration: 3, // Duration in seconds for one complete cycle
+    duration: 3,
     colors: {
       red: {
         primary: new THREE.Color('#FF6A3B'),
         edge: new THREE.Color('#BB6D66'),
       },
       green: {
-        primary: new THREE.Color('#2AE246'), // Brighter green
-        edge: new THREE.Color('#1A9E2F'), // Darker green edge
+        primary: new THREE.Color('#2AE246'),
+        edge: new THREE.Color('#1A9E2F'),
       },
     },
   });
 
-  // Configuration variables
   const config = {
     pixelSize: 5,
     gradientColors: {
@@ -55,9 +53,8 @@ export const Orange = () => {
     },
   };
 
-  // Position offset variables
   const positionOffset = {
-    x: 0.1,
+    x: 0.05,
     y: -1,
     z: 0,
   };
@@ -65,11 +62,9 @@ export const Orange = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Scene setup
     const scene = new THREE.Scene();
-    scene.background = null;
+    scene.background = new THREE.Color(0x000);
 
-    // Orthographic camera setup
     const aspect = window.innerWidth / window.innerHeight;
     const frustumSize = 4;
     const camera = new THREE.OrthographicCamera((frustumSize * aspect) / -2, (frustumSize * aspect) / 2, frustumSize / 2, frustumSize / -2, 0.1, 1000);
@@ -89,7 +84,6 @@ export const Orange = () => {
 
     containerRef.current.appendChild(renderer.domElement);
 
-    // Create render target with proper format for transparency
     const renderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, {
       minFilter: THREE.LinearFilter,
       magFilter: THREE.LinearFilter,
@@ -97,11 +91,9 @@ export const Orange = () => {
       stencilBuffer: false,
     });
 
-    // Initialize EffectComposer with proper render target
     const composer = new EffectComposer(renderer, renderTarget);
     const renderPass = new RenderPass(scene, camera);
 
-    renderPass.clearAlpha = 0;
     composer.addPass(renderPass);
 
     const createPixelPass = (): ExtendedShaderPass => {
@@ -225,7 +217,7 @@ export const Orange = () => {
     loader.manager = loadingManager;
 
     loader.load(
-      '/models/nectarine.gltf',
+      '/models/nectarine-compressed.glb',
       gltf => {
         console.log('Model loaded successfully:', gltf);
         model = gltf.scene;
@@ -322,7 +314,8 @@ export const Orange = () => {
         model.position.y = positionOffset.y + Math.sin(Date.now() * 0.001) * 0.1;
       }
 
-      renderer.render(scene, camera);
+      composer.render();
+      //   renderer.render(scene, camera);
     };
 
     animate();
@@ -361,8 +354,13 @@ export const Orange = () => {
   }, []);
 
   return (
-    <section className="h-svh sticky top-0 w-full overflow-hidden">
-      <div ref={containerRef} className="w-full h-full" />
+    <section className="h-svh sticky top-0 w-full overflow-hidden -z-10">
+      <div ref={containerRef} className="w-full h-full pointer-events-none" />
+      <div className="absolute inset-0 container flex items-end text-center justify-center pb-16">
+        <h1 className="text-white lg:text-base text-sm">
+          <p>Pixels meet purpose</p> <p>A taste of creativity rendered in code.</p>
+        </h1>
+      </div>
     </section>
   );
 };
