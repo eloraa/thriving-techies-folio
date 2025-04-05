@@ -2,11 +2,11 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { links } from './header';
 import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/all';
 import { Link } from './link';
+import { links } from '@/lib/const';
 
 export const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,15 +19,13 @@ export const Nav = () => {
   };
 
   useEffect(() => {
-    console.log(pathname);
-
     if (!pathname) return;
     const ctx = gsap.context(() => {
       gsap.registerPlugin(ScrollToPlugin);
       if (pathname === '/') {
         goToTop();
       } else {
-        gsap.to(window, { duration: 0.8, scrollTo: { y: `#${pathname.replace('/', '')}` }, ease: 'power2.easeOut' });
+        if (links.some(link => link.href === pathname)) gsap.to(window, { duration: 0.8, scrollTo: { y: `#${pathname.replace('/', '')}` }, ease: 'power2.easeOut' });
       }
     });
     return () => ctx.revert();

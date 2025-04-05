@@ -1,13 +1,17 @@
 'use client';
 
+import { links } from '@/lib/const';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/all';
 import { default as NextLink } from 'next/link';
+import { usePathname } from 'next/navigation';
 // import { useRouter } from 'next/router';
 
 export const Link = ({ href, className, index, children }: { href: string; className?: string; index?: number; children: React.ReactNode }) => {
   //   const router = useRouter();
+  const pathname = usePathname();
   const handleRouteChange = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!links.some(link => link.href === pathname)) return;
     e.preventDefault();
     if (!href) return;
     // doesn't work -> Error: NextRouter was not mounted. https://nextjs.org/docs/messages/next-router-not-mounted
