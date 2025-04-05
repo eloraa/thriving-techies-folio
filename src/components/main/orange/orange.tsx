@@ -54,7 +54,7 @@ export const Orange = () => {
   };
 
   const positionOffset = {
-    x: 0.05,
+    x: 0.15,
     y: -1,
     z: 0,
   };
@@ -354,9 +354,9 @@ export const Orange = () => {
   }, []);
 
   return (
-    <section className="h-svh sticky top-0 w-full overflow-hidden -z-10">
+    <section className="h-screen sticky top-0 w-full overflow-hidden -z-10">
       <div ref={containerRef} className="w-full h-full pointer-events-none" />
-      <div className="absolute inset-0 container flex items-end text-center justify-center pb-16">
+      <div className="absolute inset-0 container flex items-end text-center justify-center md:pb-16 pb-32">
         <h1 className="text-white lg:text-base text-sm">
           <p>Pixels meet purpose</p> <p>A taste of creativity rendered in code.</p>
         </h1>
