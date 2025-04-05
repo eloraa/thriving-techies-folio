@@ -1,4 +1,4 @@
-import { Github } from '@/components/ui/icons';
+// import { Github } from '@/components/ui/icons';
 import { Title } from '@/components/ui/title';
 import { AsciiDisplay } from './ascii-display';
 import { ScrollTriggerWrapper } from './scrolltrigger-wrapper';
@@ -58,19 +58,19 @@ export const team = [
     image: '/images/team/sakib.png',
     ascii: readFileSync(join(basePath, 'sakib.txt'), 'utf-8'),
   },
-  {
-    name: 'Elora',
-    role: 'Frontend Developer | UI/UX Designer',
-    image: '/images/team/elora.png',
-    ascii: readFileSync(join(basePath, 'elora.txt'), 'utf-8'),
-    links: [
-      {
-        label: 'GitHub',
-        icon: Github,
-        url: 'https://github.com/eloraa',
-      },
-    ],
-  },
+  // {
+  //   name: 'Elora',
+  //   role: 'Frontend Developer | UI/UX Designer',
+  //   image: '/images/team/elora.png',
+  //   ascii: readFileSync(join(basePath, 'elora.txt'), 'utf-8'),
+  //   links: [
+  //     {
+  //       label: 'GitHub',
+  //       icon: Github,
+  //       url: 'https://github.com/eloraa',
+  //     },
+  //   ],
+  // },
 ];
 
 export const Team = () => {
@@ -90,7 +90,7 @@ export const Team = () => {
               <div>
                 <h3 className="dark:font-medium font-semibold">{member.name}</h3>
                 <p className="text-muted-foreground text-xs md:text-sm font-unifont">{member.role}</p>
-                {member.links && member.links.length && (
+                {/* {member.links && member.links.length && (
                   <ul className="flex items-center gap-2 mt-2">
                     {member.links.map((link, i) => (
                       <li key={i}>
@@ -100,7 +100,7 @@ export const Team = () => {
                       </li>
                     ))}
                   </ul>
-                )}
+                )} */}
               </div>
             </div>
           ))}
