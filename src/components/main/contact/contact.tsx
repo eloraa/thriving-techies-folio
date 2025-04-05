@@ -22,7 +22,7 @@ export const Contact = () => {
         <GoToTop />
         <p>
           <span className="font-mono">&copy;2025</span>
-          <span className="text-black/60"> By </span>
+          <span className="text-black/60"> &lt;3 By </span>
           <a href="//github.com/eloraa" target="_blank" className="font-medium">
             Elora
           </a>
