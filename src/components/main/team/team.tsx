@@ -1,6 +1,7 @@
 import { Github } from '@/components/ui/icons';
 import { Title } from '@/components/ui/title';
 import { AsciiDisplay } from './ascii-display';
+import { ScrollTriggerWrapper } from './scrolltrigger-wrapper';
 
 import { readFileSync } from 'fs';
 import Image from 'next/image';
@@ -76,33 +77,34 @@ export const Team = () => {
   return (
     <section id="team" className="container py-8 md:py-20">
       <Title>Meet our team</Title>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 gap-6">
-        {team.map((member, i) => (
-          <div key={i} className="flex flex-col gap-2 overflow-hidden">
-            <figure className="bg-[#4CAF50] dark:bg-[#009688] dark:text-background flex items-center justify-center overflow-hidden group h-[19rem] md:h-[21rem] relative hover:bg-accent/5 transition-colors">
-              <div className="aspect-[67/76] overflow-hidden w-full h-full flex items-center justify-center">
-                <AsciiDisplay ascii={member.ascii} />
+      <div className="mt-6">
+        <ScrollTriggerWrapper>
+          {team.map((member, i) => (
+            <div key={i} className="flex-shrink-0 w-[300px] flex flex-col gap-2 overflow-hidden">
+              <figure className="bg-[#4CAF50] dark:bg-[#009688] dark:text-background flex items-center justify-center overflow-hidden group h-[19rem] md:h-[21rem] relative hover:bg-accent/5 transition-colors">
+                <div className="aspect-[67/76] overflow-hidden w-full h-full flex items-center justify-center">
+                  <AsciiDisplay ascii={member.ascii} />
+                </div>
+                <Image src={member.image} alt={member.name} fill className="group-hover:opacity-100 transition-all object-contain opacity-0 pointer-events-none" />
+              </figure>
+              <div>
+                <h3 className="dark:font-medium font-semibold">{member.name}</h3>
+                <p className="text-muted-foreground text-xs md:text-sm font-unifont">{member.role}</p>
+                {member.links && member.links.length && (
+                  <ul className="flex items-center gap-2 mt-2">
+                    {member.links.map((link, i) => (
+                      <li key={i}>
+                        <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-accent">
+                          <link.icon className="w-4 h-4" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              <Image src={member.image} alt={member.name} fill className="group-hover:opacity-100 transition-all object-contain opacity-0 pointer-events-none" />
-            </figure>
-            <div>
-              <h3 className="dark:font-medium font-semibold">{member.name}</h3>
-              <p className="text-muted-foreground text-xs md:text-sm font-unifont">{member.role}</p>
-              {member.links && member.links.length && (
-                <ul className="flex items-center gap-2 mt-2">
-                  {member.links.map((link, i) => (
-                    <li key={i}>
-                      <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-accent">
-                        <link.icon className="w-4 h-4" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
             </div>
-          </div>
-        ))}
+          ))}
+        </ScrollTriggerWrapper>
       </div>
     </section>
   );
