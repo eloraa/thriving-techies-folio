@@ -19,6 +19,9 @@ export const ScrollTriggerWrapper = ({ children }: ScrollTriggerWrapperProps) =>
       const teamContainer = containerRef.current;
       if (!teamContainer) return;
 
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) return;
+
       const teamWidth = teamContainer.scrollWidth;
       const sectionWidth = sectionRef.current?.offsetWidth || 0;
       const maxScroll = teamWidth - sectionWidth;
@@ -42,7 +45,7 @@ export const ScrollTriggerWrapper = ({ children }: ScrollTriggerWrapperProps) =>
 
   return (
     <div ref={sectionRef} className="overflow-hidden min-h-[50vh] flex items-center">
-      <div ref={containerRef} className="flex gap-6">
+      <div ref={containerRef} className="flex gap-6 md:flex-row flex-col max-md:w-full">
         {children}
       </div>
     </div>

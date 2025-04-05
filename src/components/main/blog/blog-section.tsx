@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { Title } from '@/components/ui/title';
 import { generateColor } from '@/lib/utils';
 import { formatDistance } from 'date-fns';
@@ -65,7 +66,7 @@ export const BlogSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {posts.map((post, index) => (
             <div key={index} className="flex flex-col border border-foreground/15">
-              <figure className="h-28 md:h-72" style={{ backgroundColor: generateColor() }}>
+              <figure className="h-64 md:h-72" style={{ backgroundColor: generateColor() }}>
                 {/* image goes here */}
               </figure>
               <div className="space-y-2 p-4">
@@ -74,6 +75,11 @@ export const BlogSection = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="flex text-center justify-center mt-8">
+          <Button className="font-mono uppercase" variant="outline" asChild>
+            <Link href="/blogs">View All</Link>
+          </Button>
         </div>
       </div>
     </section>

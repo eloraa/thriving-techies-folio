@@ -19,6 +19,8 @@ export const Nav = () => {
   };
 
   useEffect(() => {
+    // temp
+    document.cookie = 'theme=dark';
     if (!pathname) return;
     const ctx = gsap.context(() => {
       gsap.registerPlugin(ScrollToPlugin);

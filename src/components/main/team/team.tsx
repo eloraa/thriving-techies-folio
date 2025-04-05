@@ -80,7 +80,7 @@ export const Team = () => {
       <div className="mt-6">
         <ScrollTriggerWrapper>
           {team.map((member, i) => (
-            <div key={i} className="flex-shrink-0 w-[300px] flex flex-col gap-2 overflow-hidden">
+            <div key={i} className="flex-shrink-0 w-full md:w-[300px] flex flex-col gap-2 overflow-hidden">
               <figure className="bg-[#4CAF50] dark:bg-[#009688] dark:text-background flex items-center justify-center overflow-hidden group h-[19rem] md:h-[21rem] relative hover:bg-accent/5 transition-colors">
                 <div className="aspect-[67/76] overflow-hidden w-full h-full flex items-center justify-center">
                   <AsciiDisplay ascii={member.ascii} />
