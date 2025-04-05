@@ -79,7 +79,7 @@ export class CityCanvas {
       mouseYOffset: 1,
       bloomColor: '#ffffff',
       buildingColor: '#000000',
-      wireframeColor: '#ffffff',
+      wireframeColor: '#009688',
       enablePostProcessing: true,
       darkMode: true,
       cameraZoom: 10,
@@ -515,5 +515,35 @@ export class CityCanvas {
 
   public getScale(): number {
     return this.PARAMS.scale;
+  }
+
+  public setColor(element: 'bloom' | 'building' | 'wireframe', color: string) {
+    switch (element) {
+      case 'bloom':
+        this.PARAMS.bloomColor = color;
+        break;
+      case 'building':
+        this.PARAMS.buildingColor = color;
+        this.rows.forEach(row => {
+          row.children.forEach(child => {
+            if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshBasicMaterial) {
+              child.material.color.set(color);
+            }
+          });
+        });
+        break;
+      case 'wireframe':
+        this.PARAMS.wireframeColor = color;
+        this.rows.forEach(row => {
+          row.children.forEach(child => {
+            if (child instanceof THREE.LineSegments && child.material instanceof THREE.LineBasicMaterial) {
+              child.material.color.set(color);
+            }
+          });
+        });
+        break;
+      default:
+        console.warn(`Unknown color element: ${element}`);
+    }
   }
 }

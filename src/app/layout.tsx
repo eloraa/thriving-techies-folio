@@ -4,7 +4,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { Header } from '@/components/main/header/header';
 import { cookies } from 'next/headers';
-import { Lenis } from '@/components/main/lenis/lenis';
+import { ClientHandler } from '@/components/main/client-handler/client-handler';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -19,6 +19,11 @@ const geistMono = Geist_Mono({
 const unifont = localFont({
   src: '../lib/assets/fonts/unifont-15.1.01.otf',
   variable: '--font-unifont',
+});
+const consolas = localFont({
+  src: '../lib/assets/fonts/consolas.ttf',
+  variable: '--font-consolas',
+  weight: '400',
 });
 
 export const metadata: Metadata = {
@@ -38,15 +43,15 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${unifont.variable} ${theme?.value === 'dark' ? 'dark' : 'light'} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${unifont.variable} ${consolas.variable} ${theme?.value === 'dark' ? 'dark' : 'light'} antialiased`}
       style={{ colorScheme: theme?.value === 'dark' ? 'dark' : 'light' }}
     >
       <body>
         <div style={{ display: 'contents' }}>
-          <Lenis>
+          <ClientHandler theme={theme?.value === 'dark' ? 'dark' : 'light'}>
             <Header />
             {children}
-          </Lenis>
+          </ClientHandler>
         </div>
       </body>
     </html>

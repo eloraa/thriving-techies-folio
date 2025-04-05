@@ -3,12 +3,35 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { links } from './header';
-import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import gsap from 'gsap';
+import { ScrollToPlugin } from 'gsap/all';
+import { Link } from './link';
 
 export const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [buttonWidth, setButtonWidth] = useState(0);
   const [hasMeasured, setHasMeasured] = useState(false);
+
+  const pathname = usePathname();
+  const goToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    console.log(pathname);
+
+    if (!pathname) return;
+    const ctx = gsap.context(() => {
+      gsap.registerPlugin(ScrollToPlugin);
+      if (pathname === '/') {
+        goToTop();
+      } else {
+        gsap.to(window, { duration: 0.8, scrollTo: { y: `#${pathname.replace('/', '')}` }, ease: 'power2.easeOut' });
+      }
+    });
+    return () => ctx.revert();
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,13 +43,9 @@ export const Nav = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const goToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <div className="md:hidden fixed bottom-4 inset-x-0 flex items-center justify-center pointer-events-none z-30">
-      <div className="py-1 rounded-full bg-accent/10 backdrop-blur-xl flex items-center px-1 border pointer-events-auto" style={{ paddingLeft: isScrolled ? 16 : 4 }}>
+      <div className="py-1 rounded-full bg-popover/80 backdrop-blur-xl flex items-center px-1 border pointer-events-auto" style={{ paddingLeft: isScrolled ? 16 : 4 }}>
         <button
           onClick={goToTop}
           ref={el => {

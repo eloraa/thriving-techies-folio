@@ -19,21 +19,20 @@ export const AsciiDisplay = ({ ascii }: AsciiDisplayProps) => {
 
       const containerWidth = container.clientWidth;
       const containerHeight = container.clientHeight;
-      
-      // Start with your preferred size
-      let fontSize = 3.2;
-      let lineHeight = fontSize * 0.875; // This ratio (0.875) gives us 2.8px line-height for 3.2px font-size
-      
+
+      let fontSize = 8;
+      let lineHeight = fontSize;
+
       while (fontSize > 1) {
         preElement.style.fontSize = `${fontSize}px`;
         preElement.style.lineHeight = `${lineHeight}px`;
-        
+
         if (preElement.offsetWidth <= containerWidth && preElement.offsetHeight <= containerHeight) {
           break;
         }
-        
+
         fontSize -= 0.1;
-        lineHeight = fontSize * 0.875;
+        lineHeight = fontSize;
       }
     });
 
@@ -49,13 +48,13 @@ export const AsciiDisplay = ({ ascii }: AsciiDisplayProps) => {
   return (
     <pre
       ref={preRef}
-      className="font-unifont whitespace-pre inline-block scale-x-95"
+      className="font-mono whitespace-pre inline-block"
       style={{
-        fontSize: '3.2px',
-        lineHeight: '2.8px'
+        fontSize: '2.8px',
+        lineHeight: '2.8px',
       }}
     >
       {ascii}
     </pre>
   );
-}; 
+};

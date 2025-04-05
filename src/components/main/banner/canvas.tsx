@@ -1,6 +1,7 @@
 'use client';
 
 import { CityCanvas } from '@/lib/canvas';
+import { useCity } from '@/store/city';
 import { useRef } from 'react';
 
 const getDeviceScale = () => {
@@ -19,9 +20,12 @@ const getDeviceScale = () => {
 
 export const Canvas = () => {
   const canvas = useRef<CityCanvas>(null);
+
+  const { setCity } = useCity();
   const init = (el: HTMLDivElement) => {
     if (el && !canvas.current) {
       const city = new CityCanvas(el);
+      setCity(city);
 
       const scale = getDeviceScale();
       city.setScale(scale);

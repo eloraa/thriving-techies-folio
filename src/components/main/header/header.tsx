@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from './link';
 import { Nav } from './nav';
 
 export const links = [
@@ -37,8 +37,7 @@ export const Header = () => {
             <ul className="flex space-x-4">
               {links.map((link, index) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="flex items-center gap-1">
-                    <span className="font-unifont text-muted-foreground">0{index + 1}</span>
+                  <Link href={link.href} index={index} className="flex items-center gap-1">
                     {link.label}
                   </Link>
                 </li>

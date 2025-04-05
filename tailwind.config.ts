@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         unifont: 'var(--font-unifont)',
+        mono: 'var(--font-consolas)',
       },
       container: {
         center: true,
