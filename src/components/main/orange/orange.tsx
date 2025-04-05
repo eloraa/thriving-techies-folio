@@ -39,7 +39,7 @@ export const Orange = () => {
   });
 
   const config = {
-    pixelSize: 5,
+    pixelSize: 4,
     gradientColors: {
       center: '#FF6A3B',
       middle: '#FF6A3B',
