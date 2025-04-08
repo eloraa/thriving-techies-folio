@@ -1,7 +1,6 @@
 import { About } from '@/components/main/about/about';
 import { Banner } from '@/components/main/banner/banner';
 import { BlogSection } from '@/components/main/blog/blog-section';
-import { Contact } from '@/components/main/contact/contact';
 import { Marquee } from '@/components/main/marquee/marquee';
 import { Orange } from '@/components/main/orange/orange';
 import { Showcase } from '@/components/main/showcase/showcase';
@@ -17,7 +16,6 @@ export default function Home() {
       <Showcase />
       <BlogSection />
       <Orange />
-      <Contact />
     </>
   );
 }

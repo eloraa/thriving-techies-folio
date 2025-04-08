@@ -9,6 +9,7 @@ export default {
       fontFamily: {
         unifont: 'var(--font-unifont)',
         mono: 'var(--font-consolas)',
+        'geist-mono': 'var(--font-geist-mono)',
       },
       container: {
         center: true,

@@ -354,13 +354,16 @@ export const Orange = () => {
   }, []);
 
   return (
-    <section className="h-screen sticky top-0 w-full overflow-hidden -z-10">
-      <div ref={containerRef} className="w-full h-full pointer-events-none" />
-      <div className="absolute inset-0 container flex items-end text-center justify-center md:pb-16 pb-32">
-        <h1 className="text-white lg:text-base text-sm">
-          <p>Pixels meet purpose</p> <p>A taste of creativity rendered in code.</p>
-        </h1>
-      </div>
-    </section>
+    <>
+      <section className="h-screen sticky top-0 w-full overflow-hidden -z-10">
+        <div ref={containerRef} className="w-full h-full pointer-events-none" />
+        <div className="absolute inset-0 container flex items-end text-center justify-center md:pb-16 pb-32">
+          <h1 className="text-white lg:text-base text-sm">
+            <p>Pixels meet purpose</p> <p>A taste of creativity rendered in code.</p>
+          </h1>
+        </div>
+      </section>
+      <div className="mb-56"></div>
+    </>
   );
 };
