@@ -23,6 +23,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </figure>
         <div className="space-y-2">
           <h1 className="text-center mt-8 text-lg lg:text-3xl font-semibold max-w-lg mx-auto">Pixels and Poetry: The Beauty of Shaders in Digital Art</h1>
+          <p className="text-center py-1 text-sm text-foreground/80">March 14, 2024</p>
           <div className="flex items-center gap-6 flex-wrap text-center justify-center text-sm uppercase font-mono text-foreground/50 font-medium">
             <p>Shader</p>
             <p>WebGL</p>
