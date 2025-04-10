@@ -46,10 +46,10 @@ export const Copy = ({ children, className }: { children: Readonly<React.ReactNo
   };
 
   return (
-    <p className={cn('flex items-center gap-2 overflow-hidden relative', className?.base, copied && 'bg-primary')}>
+    <p className={cn('flex items-center gap-2 overflow-hidden relative', className?.base, copied && 'bg-primary text-black')}>
       <AnimatedText copied={copied}>{children}</AnimatedText>
-      <Button variant="ghost" size="icon" className={cn('rounded-none hover:bg-black/5 border-l border-black/20 text-black h-full', className?.button)} onClick={copy}>
-        {copied ? <CheckIcon className="h-4 w-4" /> : <CopyIcon className="h-4 w-4" />}
+      <Button variant="ghost" size="icon" className={cn('rounded-none hover:bg-foreground/5 border-l border-foreground/20 text-foreground h-full', className?.button)} onClick={copy}>
+        {copied ? <CheckIcon className="h-4 w-4 text-black" /> : <CopyIcon className="h-4 w-4" />}
         <span className="sr-only">Copy</span>
       </Button>
     </p>

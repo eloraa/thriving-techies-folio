@@ -42,8 +42,8 @@ export const Theme = () => {
         variant="outline"
         size="icon"
         className={cn(
-          'rounded-none hover:bg-black/5 border-r-0 border border-black/20 text-black h-full w-12 hover:border-black/20 hover:ring-black hover:ring-1 ring-inset',
-          theme === 'light' && 'bg-primary'
+          'rounded-none hover:bg-foreground/5 border-r-0 border border-foreground/20 text-foreground h-full w-12 hover:border-foreground/20 hover:ring-foreground hover:ring-1 ring-inset',
+          theme === 'light' && 'bg-primary text-black'
         )}
         onClick={() => handleThemeChange('light')}
       >
@@ -54,8 +54,8 @@ export const Theme = () => {
         variant="outline"
         size="icon"
         className={cn(
-          'rounded-none hover:bg-black/5 border-r-0 border border-black/20 text-black h-full w-12 hover:border-black/20 hover:ring-black hover:ring-1 ring-inset',
-          theme === 'dark' && 'bg-primary'
+          'rounded-none hover:bg-foreground/5 border-r-0 border border-foreground/20 text-foreground h-full w-12 hover:border-foreground/20 hover:ring-foreground hover:ring-1 ring-inset',
+          theme === 'dark' && 'bg-primary text-black'
         )}
         onClick={() => handleThemeChange('dark')}
       >

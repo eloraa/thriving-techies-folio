@@ -14,7 +14,7 @@ export const GoToTop = () => {
       }
       variant="ghost"
       size="sm"
-      className="h-auto px-0 rounded-none border-b border-black border-dotted hover:bg-transparent gap-1 text-sm absolute left-1/2 -translate-x-1/2 max-md:hidden"
+      className="h-auto px-0 rounded-none border-b border-accent border-dotted hover:bg-transparent gap-1 text-sm absolute left-1/2 -translate-x-1/2 max-md:hidden"
     >
       Back to Top <ArrowUpIcon />
     </Button>
