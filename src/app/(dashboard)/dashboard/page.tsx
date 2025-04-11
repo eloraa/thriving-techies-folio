@@ -3,26 +3,24 @@ import { Select, SelectContent, SelectItem, SelectSeparator, SelectTrigger, Sele
 import { cn } from '@/lib/utils';
 import { SearchIcon, UserIcon } from 'lucide-react';
 
-const users = [];
-
 export default function Dasboard() {
   return (
     <main className="py-4">
       <div className="flex items-center justify-between md:pr-14">
         <h1 className="md:text-lg">Posts</h1>
 
-        <div>
+        <div className="-mx-2">
           <Select defaultValue="all">
             <SelectTrigger
               className={cn(
                 buttonVariants({ variant: 'ghost', size: 'sm' }),
-                'focus:ring-0 !ring-0 focus-visible:right-0 focus-within:ring-0 !border-0 focus:border-0 focus-within:border-0 focus-visible:border-0 hover:text-foreground text-foreground/80 font-semibold'
+                'focus:ring-0 !ring-0 focus-visible:right-0 focus-within:ring-0 !border-0 focus:border-0 focus-within:border-0 focus-visible:border-0 hover:text-foreground text-foreground/80 font-semibold rounded-full'
               )}
             >
               <UserIcon />
               <SelectValue />
             </SelectTrigger>
-            <SelectContent align="end">
+            <SelectContent align="end" className="p-0.5">
               <SelectItem value="all">All Users</SelectItem>
               <SelectItem value="only_me">Only Me</SelectItem>
               <SelectSeparator />
