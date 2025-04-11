@@ -45,7 +45,7 @@ export default async function RootLayout({
       style={{ colorScheme: theme?.value === 'dark' ? 'dark' : 'light' }}
     >
       <body>
-        <div style={{ display: 'contents' }}>{children}</div>
+        <div style={{ display: 'contents' }} id="__root">{children}</div>
       </body>
     </html>
   );
