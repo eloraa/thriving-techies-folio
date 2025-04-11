@@ -17,32 +17,43 @@ export const TextToSpeech = ({ text }: TextToSpeechProps) => {
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
   const [showControls, setShowControls] = useState(false);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const voicesLoadedRef = useRef(false);
 
   const cleanText = stripMarkdown(text);
 
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
-      setVoices(availableVoices);
+      if (availableVoices.length > 0) {
+        setVoices(availableVoices);
 
-      const googleUSVoice = availableVoices.find(
-        voice => voice.name === 'Google US English' || voice.name === 'Google US English (en-US)' || (voice.name.includes('Google') && voice.lang === 'en-US')
-      );
+        if (!voicesLoadedRef.current) {
+          // Try to find Google US English voice with more flexible matching
+          const googleUSVoice = availableVoices.find(voice => voice.name.toLowerCase().includes('google') && voice.lang.toLowerCase().includes('en-us'));
 
-      const anyUSVoice = availableVoices.find(voice => voice.lang === 'en-US');
+          // If no Google voice found, try to find any US English voice
+          const anyUSVoice = availableVoices.find(voice => voice.lang.toLowerCase().includes('en-us'));
 
-      if (!selectedVoice) {
-        setSelectedVoice(googleUSVoice || anyUSVoice || (availableVoices.length > 0 ? availableVoices[0] : null));
+          // If still no voice found, use the first available voice
+          const defaultVoice = availableVoices[0];
+
+          setSelectedVoice(googleUSVoice || anyUSVoice || defaultVoice);
+          voicesLoadedRef.current = true;
+        }
       }
     };
 
+    // Load voices immediately if they're already available
     loadVoices();
+
+    // Set up the voiceschanged event listener
     window.speechSynthesis.onvoiceschanged = loadVoices;
 
+    // Cleanup
     return () => {
       window.speechSynthesis.onvoiceschanged = null;
     };
-  }, [selectedVoice]);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -53,62 +64,103 @@ export const TextToSpeech = ({ text }: TextToSpeechProps) => {
   }, []);
 
   const createUtterance = () => {
+    // Cancel any ongoing speech
     window.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.rate = rate;
-    utterance.voice = selectedVoice;
+    // Wait a small amount of time to ensure the cancel operation is complete
+    return new Promise<SpeechSynthesisUtterance>(resolve => {
+      setTimeout(() => {
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.rate = rate;
 
-    utterance.onend = () => {
-      setIsPlaying(false);
-    };
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+        }
 
-    utteranceRef.current = utterance;
-    return utterance;
+        utterance.onend = () => {
+          setIsPlaying(false);
+        };
+
+        utteranceRef.current = utterance;
+        resolve(utterance);
+      }, 100);
+    });
   };
 
-  const togglePlayPause = () => {
+  const togglePlayPause = async () => {
     if (isPlaying) {
       window.speechSynthesis.pause();
+      setIsPlaying(false);
     } else {
       if (window.speechSynthesis.paused) {
         window.speechSynthesis.resume();
       } else {
-        const utterance = createUtterance();
-        window.speechSynthesis.speak(utterance);
+        try {
+          const utterance = await createUtterance();
+          window.speechSynthesis.speak(utterance);
+        } catch (error) {
+          console.error('Failed to start speech synthesis:', error);
+          setIsPlaying(false);
+        }
       }
+      setIsPlaying(true);
     }
-    setIsPlaying(!isPlaying);
   };
 
-  const increaseSpeed = () => {
+  const increaseSpeed = async () => {
     const newRate = Math.min(rate + 0.25, 2);
     setRate(newRate);
 
     if (isPlaying) {
-      const utterance = createUtterance();
-      window.speechSynthesis.speak(utterance);
+      try {
+        const utterance = await createUtterance();
+        window.speechSynthesis.speak(utterance);
+      } catch (error) {
+        console.error('Failed to update speech rate:', error);
+      }
     }
   };
 
-  const decreaseSpeed = () => {
+  const decreaseSpeed = async () => {
     const newRate = Math.max(rate - 0.25, 0.5);
     setRate(newRate);
 
     if (isPlaying) {
-      const utterance = createUtterance();
-      window.speechSynthesis.speak(utterance);
+      try {
+        const utterance = await createUtterance();
+        window.speechSynthesis.speak(utterance);
+      } catch (error) {
+        console.error('Failed to update speech rate:', error);
+      }
     }
   };
 
-  const handleVoiceChange = (voiceName: string) => {
+  const handleVoiceChange = async (voiceName: string) => {
     const voice = voices.find(v => v.name === voiceName);
     if (voice) {
+      // First pause any ongoing speech
+      if (isPlaying) {
+        window.speechSynthesis.pause();
+        setIsPlaying(false);
+      }
+
+      // Cancel any pending utterances
+      window.speechSynthesis.cancel();
+
+      // Wait for the speech synthesis to fully stop
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Update the selected voice
       setSelectedVoice(voice);
 
+      // If we were playing before, restart with the new voice
       if (isPlaying) {
-        const utterance = createUtterance();
-        window.speechSynthesis.speak(utterance);
+        try {
+          const utterance = await createUtterance();
+          window.speechSynthesis.speak(utterance);
+        } catch (error) {
+          console.error('Failed to restart speech with new voice:', error);
+        }
       }
     }
   };

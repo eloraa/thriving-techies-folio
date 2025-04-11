@@ -10,6 +10,7 @@ import { useTheme } from '@/store/theme';
 import { Button } from '../ui/button';
 import { Check, Copy } from 'lucide-react';
 import Image from 'next/image';
+import type { Components } from 'react-markdown';
 
 interface CopyTextProps {
   text: string;
@@ -239,127 +240,127 @@ const ResponsiveIframe = ({ src, breakpoints, caption, hideCaption }: { src: str
   );
 };
 
-interface MarkdownPreviewProps {
-  content: string;
-  hideCaption?: boolean;
-}
-export const MarkdownPreview: React.FC<MarkdownPreviewProps> = React.memo(({ content, hideCaption }) => {
+const CodeBlock = React.memo(({ code, language }: { code: string; language: string }) => {
   const { theme } = useTheme();
   const style = theme === 'dark' ? darkStyle : lightStyle;
 
   return (
+    <>
+      <div className="absolute top-3 right-3">
+        <div className="sticky top-0 flex items-center gap-2">
+          <span className="text-xs text-muted-foreground font-mono">{language}</span>
+          <CopyText text={code} className="bg-background/60 hover:bg-background/80 transition-colors" />
+        </div>
+      </div>
+      <div className="w-full overflow-auto pr-10">
+        <SyntaxHighlighter style={style} language={language} PreTag="span">
+          {code}
+        </SyntaxHighlighter>
+      </div>
+    </>
+  );
+});
+
+CodeBlock.displayName = 'CodeBlock';
+
+interface MarkdownPreviewProps {
+  content: string;
+  hideCaption?: boolean;
+}
+
+export const MarkdownPreview: React.FC<MarkdownPreviewProps> = React.memo(({ content, hideCaption }) => {
+  const components = React.useMemo<Components>(() => ({
+    p: ({ node, children }) => {
+      const imgChild = node?.children?.[0];
+      if (imgChild && typeof imgChild === 'object' && 'tagName' in imgChild && imgChild.tagName === 'img') {
+        return <>{children}</>;
+      }
+      return <p>{children}</p>;
+    },
+    img({ src, alt }: { src?: string; alt?: string }) {
+      if (alt === 'Embed') {
+        return (
+          <figure className="relative w-full overflow-hidden rounded-2xl my-4">
+            <iframe src={src} width={DEFAULT_EMBED_SIZE.width} height={DEFAULT_EMBED_SIZE.height} className="rounded-lg max-w-full" allowFullScreen />
+          </figure>
+        );
+      }
+
+      // Check for basic embed syntax: ![Embed w800 h600 a16/9](url)
+      const embedMatch = alt?.match(/^Embed(?:\s+w(\d+))?(?:\s+h(\d+))?(?:\s+a(\d+\/\d+))?$/);
+      if (embedMatch) {
+        const [, width, height, aspectRatio] = embedMatch;
+        return (
+          <figure className="relative w-full overflow-hidden rounded-2xl my-4" style={{ aspectRatio: aspectRatio }}>
+            <iframe src={src} width={width || '100%'} height={height || '100%'} className="rounded-lg max-w-full" allowFullScreen />
+          </figure>
+        );
+      }
+
+      // Check for embed syntax with multiple breakpoints and aspect ratio: ![Embed (x768>h400)(h200) a16/9](url)
+      if (alt?.startsWith('Embed') && (alt.includes('(x') || alt.includes('(h'))) {
+        const breakpointPattern = /\((x(\d+)\s*(>=|<=|>|<)\s*h(\d+))|(h(\d+))\)/g;
+        const aspectRatioMatch = alt.match(/a(\d+\/\d+)/);
+        const matches = [...alt.matchAll(breakpointPattern)];
+        const breakpoints = matches.map(match => {
+          if (match[1]) {
+            return {
+              width: Number(match[2]),
+              operator: match[3].trim() as Breakpoint['operator'],
+              height: Number(match[4]),
+            };
+          } else {
+            return {
+              width: 0,
+              operator: '>' as const,
+              height: Number(match[6]),
+            };
+          }
+        });
+
+        const caption = alt.split(')').slice(-1)[0].trim();
+
+        return (
+          <figure className="relative w-full overflow-hidden rounded-2xl my-4" style={{ aspectRatio: aspectRatioMatch?.[1] }}>
+            <ResponsiveIframe src={src} breakpoints={breakpoints} caption={caption} hideCaption={hideCaption} />
+          </figure>
+        );
+      }
+
+      if (!hideCaption) {
+        return (
+          <figure className="relative w-full overflow-hidden rounded-2xl my-4">
+            <Image className="rounded-lg max-w-full h-auto !static" src={src || ''} fill alt={alt || ''} />
+            <figcaption className="text-center text-sm text-foreground/60 mt-2">{alt}</figcaption>
+          </figure>
+        );
+      }
+      return <Image fill src={src || ''} alt={alt || ''} className="rounded-lg max-w-full h-auto my-4 !static" loading="lazy" />;
+    },
+    a({ children, ...otherProps }: React.ComponentPropsWithoutRef<'a'>) {
+      return (
+        <a rel="noopener noreferrer" target="_blank" {...otherProps}>
+          {children}
+        </a>
+      );
+    },
+    pre({ children }: React.ComponentPropsWithoutRef<'pre'>) {
+      return <pre style={{ position: 'relative' }}>{children}</pre>;
+    },
+    code({ children, className = '' }: React.ComponentPropsWithoutRef<'code'>) {
+      const code = Array.isArray(children) ? String(children[0] || '').replace(/\n$/, '') : String(children || '').replace(/\n$/, '');
+      const match = /language-(\w+)/.exec(className || '');
+      if (match) {
+        return <CodeBlock code={code} language={match[1]} />;
+      }
+      return <code>{code}</code>;
+    },
+  }), [hideCaption]);
+
+  return (
     <div className="markdown-body">
       <ReactMarkdown
-        components={{
-          p: ({ node, children }) => {
-            if (node && node.children && node.children[0].type === 'element' && node.children[0].tagName === 'img') {
-              return <>{children}</>;
-            }
-            return <p>{children}</p>;
-          },
-          img({ src, alt }) {
-            if (alt === 'Embed') {
-              return (
-                <figure className="relative w-full overflow-hidden rounded-2xl my-4">
-                  <iframe src={src} width={DEFAULT_EMBED_SIZE.width} height={DEFAULT_EMBED_SIZE.height} className="rounded-lg max-w-full" allowFullScreen />
-                </figure>
-              );
-            }
-
-            // Check for basic embed syntax: ![Embed w800 h600 a16/9](url)
-            const embedMatch = alt?.match(/^Embed(?:\s+w(\d+))?(?:\s+h(\d+))?(?:\s+a(\d+\/\d+))?$/);
-            if (embedMatch) {
-              const [, width, height, aspectRatio] = embedMatch;
-              return (
-                <figure className="relative w-full overflow-hidden rounded-2xl my-4" style={{ aspectRatio: aspectRatio }}>
-                  <iframe src={src} width={width || '100%'} height={height || '100%'} className="rounded-lg max-w-full" allowFullScreen />
-                </figure>
-              );
-            }
-
-            // Check for embed syntax with multiple breakpoints and aspect ratio: ![Embed (x768>h400)(h200) a16/9](url)
-            if (alt?.startsWith('Embed') && (alt.includes('(x') || alt.includes('(h'))) {
-              const breakpointPattern = /\((x(\d+)\s*(>=|<=|>|<)\s*h(\d+))|(h(\d+))\)/g;
-              const aspectRatioMatch = alt.match(/a(\d+\/\d+)/);
-              const matches = [...alt.matchAll(breakpointPattern)];
-              const breakpoints = matches.map(match => {
-                if (match[1]) {
-                  return {
-                    width: Number(match[2]),
-                    operator: match[3].trim() as Breakpoint['operator'],
-                    height: Number(match[4]),
-                  };
-                } else {
-                  return {
-                    width: 0,
-                    operator: '>' as const,
-                    height: Number(match[6]),
-                  };
-                }
-              });
-
-              const caption = alt.split(')').slice(-1)[0].trim();
-
-              return (
-                <figure className="relative w-full overflow-hidden rounded-2xl my-4" style={{ aspectRatio: aspectRatioMatch?.[1] }}>
-                  <ResponsiveIframe src={src} breakpoints={breakpoints} caption={caption} hideCaption={hideCaption} />
-                </figure>
-              );
-            }
-
-            // Check for simple embed syntax with aspect ratio: ![Embed a16/9](url)
-            if (alt === 'Embed') {
-              const aspectRatioMatch = alt.match(/a(\d+\/\d+)/);
-              return (
-                <figure className="relative w-full overflow-hidden rounded-2xl my-4" style={{ aspectRatio: aspectRatioMatch?.[1] }}>
-                  <iframe src={src} width={DEFAULT_EMBED_SIZE.width} height={DEFAULT_EMBED_SIZE.height} className="rounded-lg max-w-full" allowFullScreen />
-                </figure>
-              );
-            }
-
-            if (!hideCaption) {
-              return (
-                <figure className="relative w-full overflow-hidden rounded-2xl my-4">
-                  <Image className="rounded-lg max-w-full h-auto !static" src={src || ''} fill alt={alt || ''} />
-                  <figcaption className="text-center text-sm text-foreground/60 mt-2">{alt}</figcaption>
-                </figure>
-              );
-            }
-            return <Image fill src={src || ''} alt={alt || ''} className="rounded-lg max-w-full h-auto my-4 !static" loading="lazy" />;
-          },
-          a({ children, ...otherProps }) {
-            return (
-              <a rel="noopener noreferrer" target="_blank" {...otherProps}>
-                {children}
-              </a>
-            );
-          },
-          pre({ children }) {
-            return <pre style={{ position: 'relative' }}>{children}</pre>;
-          },
-          code({ children, className = '' }: React.ComponentPropsWithoutRef<'code'>) {
-            const code = Array.isArray(children) ? String(children[0] || '').replace(/\n$/, '') : String(children || '').replace(/\n$/, '');
-            const match = /language-(\w+)/.exec(className || '');
-            if (match) {
-              return (
-                <>
-                  <div className="absolute top-3 right-3">
-                    <div className="sticky top-0 flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground font-mono">{match[1]}</span>
-                      <CopyText text={code} className="bg-background/60 hover:bg-background/80 transition-colors" />
-                    </div>
-                  </div>
-                  <div className="w-full overflow-auto pr-10">
-                    <SyntaxHighlighter style={style} language={match[1]} PreTag="span">
-                      {code}
-                    </SyntaxHighlighter>
-                  </div>
-                </>
-              );
-            }
-            return <code>{code}</code>;
-          },
-        }}
+        components={components}
         rehypePlugins={[
           rehypeRaw,
           [
