@@ -9,6 +9,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { useTheme } from '@/store/theme';
 import { Button } from '../ui/button';
 import { Check, Copy } from 'lucide-react';
+import Image from 'next/image';
 
 interface CopyTextProps {
   text: string;
@@ -37,10 +38,6 @@ const CopyText: React.FC<CopyTextProps> = ({ text }) => {
     </Button>
   );
 };
-
-interface MarkdownPreviewProps {
-  content: string;
-}
 
 const lightStyle: { [key: string]: React.CSSProperties } = {
   'code[class*="language-"]': {
@@ -178,7 +175,75 @@ const darkStyle: { [key: string]: React.CSSProperties } = {
   '.language-markup .token.punctuation': { color: 'hsl(33, 33%, 52%)' },
 };
 
-export const MarkdownPreview: React.FC<MarkdownPreviewProps> = React.memo(({ content }) => {
+const DEFAULT_EMBED_SIZE = {
+  width: '100%',
+  height: '400',
+} as const;
+
+interface Breakpoint {
+  width: number;
+  operator: '>' | '<' | '>=' | '<=';
+  height: number;
+}
+
+const ResponsiveIframe = ({ src, breakpoints, caption, hideCaption }: { src: string | undefined; breakpoints: Breakpoint[]; caption?: string; hideCaption?: boolean }) => {
+  const [height, setHeight] = React.useState(400);
+
+  React.useEffect(() => {
+    const updateHeight = () => {
+      const windowWidth = window.innerWidth;
+      const sortedBreakpoints = [...breakpoints].sort((a, b) => b.width - a.width);
+
+      for (const bp of sortedBreakpoints) {
+        if (bp.width === 0) {
+          setHeight(bp.height);
+          return;
+        }
+
+        const matchesCondition = (() => {
+          switch (bp.operator) {
+            case '>':
+              return windowWidth > bp.width;
+            case '<':
+              return windowWidth < bp.width;
+            case '>=':
+              return windowWidth >= bp.width;
+            case '<=':
+              return windowWidth <= bp.width;
+            default:
+              return false;
+          }
+        })();
+
+        if (matchesCondition) {
+          setHeight(bp.height);
+          return;
+        }
+      }
+
+      setHeight(400);
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, [breakpoints]);
+
+  if (!src) return null;
+
+  return (
+    <figure className="relative w-full overflow-hidden rounded-2xl my-4">
+      <iframe src={src} width="100%" height={height} className="rounded-lg max-w-full" allowFullScreen />
+      {caption && !hideCaption && <figcaption className="text-center text-sm text-foreground/60 mt-2">{caption}</figcaption>}
+    </figure>
+  );
+};
+
+interface MarkdownPreviewProps {
+  content: string;
+  hideCaption?: boolean;
+}
+export const MarkdownPreview: React.FC<MarkdownPreviewProps> = React.memo(({ content, hideCaption }) => {
   const { theme } = useTheme();
   const style = theme === 'dark' ? darkStyle : lightStyle;
 
@@ -186,6 +251,82 @@ export const MarkdownPreview: React.FC<MarkdownPreviewProps> = React.memo(({ con
     <div className="markdown-body">
       <ReactMarkdown
         components={{
+          p: ({ node, children }) => {
+            if (node && node.children && node.children[0].type === 'element' && node.children[0].tagName === 'img') {
+              return <>{children}</>;
+            }
+            return <p>{children}</p>;
+          },
+          img({ src, alt }) {
+            if (alt === 'Embed') {
+              return (
+                <figure className="relative w-full overflow-hidden rounded-2xl my-4">
+                  <iframe src={src} width={DEFAULT_EMBED_SIZE.width} height={DEFAULT_EMBED_SIZE.height} className="rounded-lg max-w-full" allowFullScreen />
+                </figure>
+              );
+            }
+
+            // Check for basic embed syntax: ![Embed w800 h600 a16/9](url)
+            const embedMatch = alt?.match(/^Embed(?:\s+w(\d+))?(?:\s+h(\d+))?(?:\s+a(\d+\/\d+))?$/);
+            if (embedMatch) {
+              const [, width, height, aspectRatio] = embedMatch;
+              return (
+                <figure className="relative w-full overflow-hidden rounded-2xl my-4" style={{ aspectRatio: aspectRatio }}>
+                  <iframe src={src} width={width || '100%'} height={height || '100%'} className="rounded-lg max-w-full" allowFullScreen />
+                </figure>
+              );
+            }
+
+            // Check for embed syntax with multiple breakpoints and aspect ratio: ![Embed (x768>h400)(h200) a16/9](url)
+            if (alt?.startsWith('Embed') && (alt.includes('(x') || alt.includes('(h'))) {
+              const breakpointPattern = /\((x(\d+)\s*(>=|<=|>|<)\s*h(\d+))|(h(\d+))\)/g;
+              const aspectRatioMatch = alt.match(/a(\d+\/\d+)/);
+              const matches = [...alt.matchAll(breakpointPattern)];
+              const breakpoints = matches.map(match => {
+                if (match[1]) {
+                  return {
+                    width: Number(match[2]),
+                    operator: match[3].trim() as Breakpoint['operator'],
+                    height: Number(match[4]),
+                  };
+                } else {
+                  return {
+                    width: 0,
+                    operator: '>' as const,
+                    height: Number(match[6]),
+                  };
+                }
+              });
+
+              const caption = alt.split(')').slice(-1)[0].trim();
+
+              return (
+                <figure className="relative w-full overflow-hidden rounded-2xl my-4" style={{ aspectRatio: aspectRatioMatch?.[1] }}>
+                  <ResponsiveIframe src={src} breakpoints={breakpoints} caption={caption} hideCaption={hideCaption} />
+                </figure>
+              );
+            }
+
+            // Check for simple embed syntax with aspect ratio: ![Embed a16/9](url)
+            if (alt === 'Embed') {
+              const aspectRatioMatch = alt.match(/a(\d+\/\d+)/);
+              return (
+                <figure className="relative w-full overflow-hidden rounded-2xl my-4" style={{ aspectRatio: aspectRatioMatch?.[1] }}>
+                  <iframe src={src} width={DEFAULT_EMBED_SIZE.width} height={DEFAULT_EMBED_SIZE.height} className="rounded-lg max-w-full" allowFullScreen />
+                </figure>
+              );
+            }
+
+            if (!hideCaption) {
+              return (
+                <figure className="relative w-full overflow-hidden rounded-2xl my-4">
+                  <Image className="rounded-lg max-w-full h-auto !static" src={src || ''} fill alt={alt || ''} />
+                  <figcaption className="text-center text-sm text-foreground/60 mt-2">{alt}</figcaption>
+                </figure>
+              );
+            }
+            return <Image fill src={src || ''} alt={alt || ''} className="rounded-lg max-w-full h-auto my-4 !static" loading="lazy" />;
+          },
           a({ children, ...otherProps }) {
             return (
               <a rel="noopener noreferrer" target="_blank" {...otherProps}>
@@ -199,7 +340,6 @@ export const MarkdownPreview: React.FC<MarkdownPreviewProps> = React.memo(({ con
           code({ children, className = '' }: React.ComponentPropsWithoutRef<'code'>) {
             const code = Array.isArray(children) ? String(children[0] || '').replace(/\n$/, '') : String(children || '').replace(/\n$/, '');
             const match = /language-(\w+)/.exec(className || '');
-
             if (match) {
               return (
                 <>
@@ -217,7 +357,6 @@ export const MarkdownPreview: React.FC<MarkdownPreviewProps> = React.memo(({ con
                 </>
               );
             }
-
             return <code>{code}</code>;
           },
         }}

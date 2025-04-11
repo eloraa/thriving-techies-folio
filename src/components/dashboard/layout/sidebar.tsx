@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation';
 export const Sidebar = () => {
   const pathname = usePathname();
   return (
-    <div className="w-sidebar relative top-16 flex h-[calc(100%-4rem)] flex-col px-4 max-md:hidden">
+    <div className="w-sidebar relative top-16 flex h-[calc(100%-4rem)] flex-col px-6 max-md:hidden">
       <div className="space-y-4 -mx-4">
         <div className="space-y-2">
           <Button asChild variant="ghost" className="rounded-full bg-accent/5 hover:bg-accent/5 text-foreground/60">

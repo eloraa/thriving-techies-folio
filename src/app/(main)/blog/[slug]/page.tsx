@@ -1,15 +1,9 @@
-import { Button } from '@/components/ui/button';
-import { Play } from 'lucide-react';
 import Image from 'next/image';
 import { Share } from './share';
-// import Blog from './blog.mdx';
-// import { readFileSync } from 'fs';
-// import { join } from 'path';
 import { MarkdownPreview } from '@/components/markdown/markdown';
 import { blog } from './blog';
 import Link from 'next/link';
-
-// const blog = readFileSync(join(process.cwd(), 'src/app/(main)/blog/[slug]/blog.md', 'blog.md'), 'utf-8');
+import { TextToSpeech } from '@/app/(main)/blog/[slug]/text-to-speech';
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -43,14 +37,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       </div>
 
       <div className="py-3 flex items-center justify-between">
-        <div className="space-x-4 flex items-center">
-          <Button variant="ghost" size="sm" className="px-0 h-auto rounded-none">
-            <Play />
-            Listen to article
-          </Button>
-          <span className="h-4 border-l border-accent/15"></span>
-          <h2 className="text-sm font-mono">05:42:03</h2>
-        </div>
+        <TextToSpeech text={decodeURIComponent(blog)} />
         <Share content={typeof window !== 'undefined' ? window.location.href : ''} />
       </div>
 

@@ -105,7 +105,7 @@
     line-height: 1.25;
     font-size: 1.25rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid hsl(var(--primary) / 0.2);
+    border-bottom: 1px solid hsl(var(--accent) / 0.2);
   }
 
   .markdown-body h3 {
