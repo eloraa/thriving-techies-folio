@@ -1,3 +1,5 @@
+import { HomeIcon, UsersIcon } from 'lucide-react';
+
 export const links = [
   {
     label: 'Home',
@@ -22,5 +24,18 @@ export const links = [
   {
     label: 'Contact',
     href: '/contact',
+  },
+];
+
+export const dashboardLinks = [
+  {
+    label: 'Dashboard',
+    href: '/dashboard',
+    icon: HomeIcon,
+  },
+  {
+    label: 'Teams',
+    href: '/teams',
+    icon: UsersIcon,
   },
 ];

@@ -23,7 +23,7 @@ const getSystemTheme = (): 'light' | 'dark' => {
 };
 
 export const useTheme = create<ThemeState>(set => ({
-  theme: 'light', // Default theme for SSR
+  theme: 'light',
   setTheme: theme => {
     const newTheme = theme === 'system' ? getSystemTheme() : theme;
     set({ theme: newTheme });

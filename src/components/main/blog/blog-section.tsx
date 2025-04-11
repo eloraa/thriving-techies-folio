@@ -71,6 +71,12 @@ export const BlogSection = () => {
               </figure>
               <div className="space-y-2 p-4">
                 <Link href="/blog/pixels-and-poetry">{post.title}</Link>
+                <p className="text-sm text-foreground/80">
+                  By{' '}
+                  <Link href="/profile/elora" className="font-medium text-primary">
+                    Elora
+                  </Link>
+                </p>
                 <h4 className="font-mono text-xs uppercase">{formatDistance(post.created_at, new Date(), { addSuffix: true })}</h4>
               </div>
             </div>
