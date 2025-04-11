@@ -2,10 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
-import { Header } from '@/components/main/header/header';
 import { cookies } from 'next/headers';
-import { ClientHandler } from '@/components/main/client-handler/client-handler';
-import { Contact } from '@/components/main/contact/contact';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -48,13 +45,7 @@ export default async function RootLayout({
       style={{ colorScheme: theme?.value === 'dark' ? 'dark' : 'light' }}
     >
       <body>
-        <div style={{ display: 'contents' }}>
-          <ClientHandler theme={theme?.value === 'dark' ? 'dark' : 'light'}>
-            <Header />
-            {children}
-            <Contact />
-          </ClientHandler>
-        </div>
+        <div style={{ display: 'contents' }}>{children}</div>
       </body>
     </html>
   );
