@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectSeparator, SelectTrigger, Sele
 import { cn } from '@/lib/utils';
 import { Check, SearchIcon, UserIcon } from 'lucide-react';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { users } from './page';
+import { users } from './const';
 import { Popover, PopoverAnchor, PopoverContent } from '@/components/ui/popover';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 

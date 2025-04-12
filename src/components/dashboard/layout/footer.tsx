@@ -13,7 +13,7 @@ import { PencilIcon, SettingsIcon } from 'lucide-react';
 export const Footer = ({ user }: { user: User }) => {
   const pathname = usePathname();
   return (
-    <footer className="md:hidden flex items-center justify-between gap-2 fixed inset-x-0 bottom-0 z-40 h-16 w-full bg-background/80 backdrop-blur-md px-4 pb-4">
+    <footer className="md:hidden flex items-center justify-between gap-2 fixed inset-x-0 bottom-0 z-40 h-[4rem] w-full bg-background/80 backdrop-blur-md px-4 py-2">
       <TooltipProvider delayDuration={0}>
         {dashboardLinks.map(link => (
           <Tooltip key={link.href}>

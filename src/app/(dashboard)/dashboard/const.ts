@@ -1,0 +1,115 @@
+export const users = [
+  {
+    id: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8',
+    name: 'Elora',
+    username: 'elora',
+    avatar: '/elora.png',
+    posts: 14,
+  },
+  {
+    id: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d9',
+    name: 'John Doe',
+    username: 'johndoe',
+    avatar: '/john.png',
+    posts: 4,
+  },
+  {
+    id: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d0',
+    name: 'Neon',
+    username: 'neon',
+    avatar: '/neon.png',
+    posts: 0,
+  },
+  {
+    id: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d2',
+    name: 'Jane Doe',
+    username: 'janedoe',
+    avatar: '/jane.png',
+    posts: 0,
+  },
+  {
+    id: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d3',
+    name: 'John Smith',
+    username: 'johnsmith',
+    avatar: '/john.png',
+    posts: 0,
+  },
+];
+
+export const posts = [
+  // Elora's posts (14)
+  { id: 'post-1', title: 'Building a custom WebGL shader 🌈', userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8', created_at: '2025-04-10T08:00:00Z', image: 'https://picsum.photos/seed/shader1/600/400' },
+  {
+    id: 'post-2',
+    title: 'CSS grid vs Flexbox: when to use what? 🎯',
+    userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8',
+    created_at: '2025-04-10T09:30:00Z',
+    image: 'https://picsum.photos/seed/cssgrid/600/400',
+  },
+  { id: 'post-3', title: 'Math behind Bézier curves 🧮', userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8', created_at: '2025-04-09T14:20:00Z', image: 'https://picsum.photos/seed/math1/600/400' },
+  {
+    id: 'post-4',
+    title: 'Experimenting with Three.js scenes 🧪',
+    userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8',
+    created_at: '2025-04-08T18:10:00Z',
+    image: 'https://picsum.photos/seed/threejs/600/400',
+  },
+  {
+    id: 'post-5',
+    title: 'Animating with requestAnimationFrame 🎥',
+    userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8',
+    created_at: '2025-04-08T10:00:00Z',
+    image: 'https://picsum.photos/seed/animation/600/400',
+  },
+  { id: 'post-6', title: 'Intro to GLSL for beginners ✨', userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8', created_at: '2025-04-07T11:00:00Z', image: 'https://picsum.photos/seed/glsl1/600/400' },
+  {
+    id: 'post-7',
+    title: 'Math tricks every graphics dev should know 📐',
+    userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8',
+    created_at: '2025-04-06T16:45:00Z',
+    image: 'https://picsum.photos/seed/mathtricks/600/400',
+  },
+  {
+    id: 'post-8',
+    title: 'Why React is still my go-to for UI 🧰',
+    userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8',
+    created_at: '2025-04-05T22:15:00Z',
+    image: 'https://picsum.photos/seed/reactui/600/400',
+  },
+  { id: 'post-9', title: 'Signed distance functions are wild 🔥', userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8', created_at: '2025-04-04T14:00:00Z', image: 'https://picsum.photos/seed/sdf/600/400' },
+  { id: 'post-10', title: 'Simulating light in shaders 🔦', userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8', created_at: '2025-04-04T08:40:00Z', image: 'https://picsum.photos/seed/lightshader/600/400' },
+  {
+    id: 'post-11',
+    title: 'Performance tips for rendering 1000+ objects ⚡',
+    userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8',
+    created_at: '2025-04-03T17:00:00Z',
+    image: 'https://picsum.photos/seed/renderperf/600/400',
+  },
+  { id: 'post-12', title: 'What the heck is a quadtree? 🌳', userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8', created_at: '2025-04-02T12:30:00Z', image: 'https://picsum.photos/seed/quadtree/600/400' },
+  {
+    id: 'post-13',
+    title: 'Using noise functions for terrain gen 🌍',
+    userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8',
+    created_at: '2025-04-01T15:20:00Z',
+    image: 'https://picsum.photos/seed/noise/600/400',
+  },
+  {
+    id: 'post-14',
+    title: 'Debugging shader code like a boss 😎',
+    userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8',
+    created_at: '2025-03-31T19:50:00Z',
+    image: 'https://picsum.photos/seed/debugshader/600/400',
+  },
+
+  // John Doe's posts (4)
+  {
+    id: 'post-15',
+    title: 'Just built a mini ray marcher! 🚀',
+    userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d9',
+    created_at: '2025-04-10T12:00:00Z',
+    image: 'https://picsum.photos/seed/raymarcher/600/400',
+  },
+  { id: 'post-16', title: 'React hooks + canvas = ❤️', userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d9', created_at: '2025-04-09T08:30:00Z', image: 'https://picsum.photos/seed/hooks/600/400' },
+  { id: 'post-17', title: 'Trigonometry in game dev 🕹️', userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d9', created_at: '2025-04-08T19:00:00Z', image: 'https://picsum.photos/seed/trig/600/400' },
+  { id: 'post-18', title: 'Tips for optimizing shaders 🧠', userid: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d9', created_at: '2025-04-07T21:15:00Z', image: 'https://picsum.photos/seed/optimize/600/400' },
+];
