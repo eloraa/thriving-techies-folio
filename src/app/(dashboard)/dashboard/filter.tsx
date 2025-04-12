@@ -9,7 +9,11 @@ import { users } from './page';
 import { Popover, PopoverAnchor, PopoverContent } from '@/components/ui/popover';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-export const Filter = () => {
+interface FilterProps {
+  onUserChange: (value: string | null) => void;
+}
+
+export const Filter = ({ onUserChange }: FilterProps) => {
   const [selectedValue, setSelectedValue] = React.useState('all');
   const [selectedUser, setSelectedUser] = React.useState<(typeof users)[0] | null>(null);
   const [open, setOpen] = React.useState(false);
@@ -19,6 +23,7 @@ export const Filter = () => {
   const handleSelectUser = (user: (typeof users)[0]) => {
     setSelectedUser(user);
     setSelectedValue(user.username);
+    onUserChange(user.id);
     setOpen(false);
   };
 
@@ -29,20 +34,23 @@ export const Filter = () => {
     }
   };
 
+  const handleValueChange = (value: string) => {
+    if (value === 'specific') {
+      setPreviousValue(selectedValue);
+      setOpen(true);
+    } else {
+      setSelectedUser(null);
+      setSelectedValue(value);
+      onUserChange(value === 'all' ? null : value);
+    }
+  };
+
   return (
     <div>
       <Select
         defaultValue="all"
         value={selectedValue}
-        onValueChange={value => {
-          if (value === 'specific') {
-            setPreviousValue(selectedValue);
-            setOpen(true);
-          } else {
-            setSelectedUser(null);
-            setSelectedValue(value);
-          }
-        }}
+        onValueChange={handleValueChange}
       >
         <Popover open={open}>
           <PopoverAnchor asChild>
