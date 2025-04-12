@@ -18,19 +18,18 @@ export type User = {
 
 type Props = {
   children: Readonly<React.ReactNode>;
-  theme: string;
   user: User;
 };
 
-export const Layout = ({ children, theme, user }: Props) => {
+export const Layout = ({ children, user }: Props) => {
   return (
     <main className="fixed h-full w-full bg-background">
-      <Header theme={theme} user={user} />
+      <Header user={user} />
       <div className="absolute inset-0 h-full w-full flex">
         <Sidebar />
         <div className="flex-1 overflow-y-auto overflow-x-hidden px-4">{children}</div>
       </div>
-      <Footer theme={theme} user={user} />
+      <Footer user={user} />
     </main>
   );
 };

@@ -8,13 +8,12 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 type Props = {
-  theme: string;
   user: User;
   direction?: 'top' | 'bottom';
   className?: string;
 };
 
-export const Dropdown = ({ theme, user, direction, className }: Props) => {
+export const Dropdown = ({ user, direction, className }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={cn('hover:opacity-95 rounded-full bg-accent/5 w-10 h-10', className)}>
@@ -36,7 +35,7 @@ export const Dropdown = ({ theme, user, direction, className }: Props) => {
               Theme
             </p>
             <div className="flex items-center bg-accent/10 rounded-full p-0.5">
-              <Theme theme={theme} />
+              <Theme />
             </div>
           </div>
         </div>

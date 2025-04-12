@@ -1,5 +1,4 @@
 import { Layout, User } from '@/components/dashboard/layout/layout';
-import { cookies } from 'next/headers';
 
 const fakeUser = {
   id: '4c1b2e4-8f3d-4a5e-8b2f-4c1b2e4f3d8',
@@ -23,12 +22,5 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookiesStore = await cookies();
-
-  const theme = cookiesStore.get('theme');
-  return (
-    <Layout theme={theme?.value === 'dark' ? 'dark' : 'light'} user={fakeUser}>
-      {children}
-    </Layout>
-  );
+  return <Layout user={fakeUser}>{children}</Layout>;
 }

@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { PencilIcon, SettingsIcon } from 'lucide-react';
 
-export const Footer = ({ theme, user }: { theme: string; user: User }) => {
+export const Footer = ({ user }: { user: User }) => {
   const pathname = usePathname();
   return (
     <footer className="md:hidden flex items-center justify-between gap-2 fixed inset-x-0 bottom-0 z-40 h-16 w-full bg-background/80 backdrop-blur-md px-4 pb-4">
@@ -51,7 +51,7 @@ export const Footer = ({ theme, user }: { theme: string; user: User }) => {
           <TooltipContent>Settings</TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <Dropdown theme={theme} user={user} direction="top" className="w-14 h-14 p-2 bg-transparent" />
+      <Dropdown user={user} direction="top" className="w-14 h-14 p-2 bg-transparent" />
     </footer>
   );
 };

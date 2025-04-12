@@ -6,12 +6,20 @@ import { Button } from '@/components/ui/button';
 import { useTheme } from '@/store/theme';
 import { cn } from '@/lib/utils';
 
-export const Theme = ({ theme: defaultTheme }: { theme: string }) => {
+export const Theme = () => {
   const { theme, setTheme } = useTheme();
-
   React.useEffect(() => {
-    setTheme(defaultTheme === 'dark' ? 'dark' : 'light');
-  }, [defaultTheme, setTheme]);
+    const savedTheme = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('theme='))
+      ?.split('=')[1] as 'light' | 'dark' | 'system' | undefined;
+
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      setTheme('system');
+    }
+  }, [setTheme]);
 
   return (
     <TooltipProvider delayDuration={0}>
