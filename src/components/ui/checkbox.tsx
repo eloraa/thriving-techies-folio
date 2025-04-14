@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 const IconCheck = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>((props, ref) => {
   return (
     <svg ref={ref} width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <path d="M1 3.5L4 6.5L9 1.5" strokeWidth="1.5" className="stroke-white" />
+      <path d="M1 3.5L4 6.5L9 1.5" strokeWidth="1.5" className="stroke-background" />
     </svg>
   );
 });
@@ -13,7 +13,7 @@ const IconCheck = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>
 const IconIndeterminate = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>((props, ref) => {
   return (
     <svg ref={ref} width="8" height="2" viewBox="0 0 8 2" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <path d="M0 1H8" strokeWidth="1.5" className="stroke-white" />
+      <path d="M0 1H8" strokeWidth="1.5" className="stroke-background" />
     </svg>
   );
 });
@@ -47,20 +47,20 @@ const Checkbox = React.forwardRef<React.ComponentRef<typeof CheckboxPrimitive.Ro
             className={cn(
               'stroke-border transition duration-200 ease-out',
               // hover
-              'group-hover/checkbox:fill-primary/40',
+              'group-hover/checkbox:fill-accent/40',
               // focus
-              'group-focus/checkbox:fill-primary group-focus/checkbox:ring-primary group-focus/checkbox:ring-2 group-focus/checkbox:ring-offset-2 group-focus/checkbox:ring-offset-background',
+              'group-focus/checkbox:fill-accent group-focus/checkbox:ring-accent group-focus/checkbox:ring-2 group-focus/checkbox:ring-offset-2 group-focus/checkbox:ring-offset-background',
               // disabled
               'group-disabled/checkbox:fill-muted',
               // hover
-              'group-hover/checkbox:group-data-[state=checked]/checkbox:fill-primary/80',
-              'group-hover/checkbox:group-data-[state=indeterminate]/checkbox:fill-primary/80',
+              'group-hover/checkbox:group-data-[state=checked]/checkbox:fill-accent/80',
+              'group-hover/checkbox:group-data-[state=indeterminate]/checkbox:fill-accent/80',
               // focus
-              'group-focus/checkbox:group-data-[state=checked]/checkbox:fill-primary/80',
-              'group-focus/checkbox:group-data-[state=indeterminate]/checkbox:fill-primary/80',
+              'group-focus/checkbox:group-data-[state=checked]/checkbox:fill-accent/80',
+              'group-focus/checkbox:group-data-[state=indeterminate]/checkbox:fill-accent/80',
               // checked
-              'group-data-[state=checked]/checkbox:fill-primary',
-              'group-data-[state=indeterminate]/checkbox:fill-primary',
+              'group-data-[state=checked]/checkbox:fill-accent',
+              'group-data-[state=indeterminate]/checkbox:fill-accent',
               // disabled checked
               'group-disabled/checkbox:group-data-[state=checked]/checkbox:fill-muted',
               'group-disabled/checkbox:group-data-[state=indeterminate]/checkbox:fill-muted'

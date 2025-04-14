@@ -20,7 +20,11 @@ export const Footer = ({ user }: { user: User }) => {
             <TooltipTrigger asChild>
               <Link
                 href={link.href}
-                className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'p-1 h-full w-14 [&_svg]:size-6 rounded-none', link.href !== pathname && 'text-foreground/40 hover:text-foreground')}
+                className={cn(
+                  buttonVariants({ variant: 'ghost', size: 'icon' }),
+                  'p-1 h-full w-14 [&_svg]:size-6 rounded-none',
+                  !pathname.includes(link.href) && 'text-foreground/40 hover:text-foreground'
+                )}
               >
                 <span className="sr-only">{link.label}</span>
                 <link.icon />

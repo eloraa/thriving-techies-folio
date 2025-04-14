@@ -29,7 +29,7 @@ export const Sidebar = () => {
         <div className="space-y-2">
           <p className="text-muted-foreground px-4 text-xs font-mono">Pages</p>
           {dashboardLinks.map(link => (
-            <Button key={link.href} asChild variant="ghost" className={cn('rounded-full', link.href === pathname && 'bg-accent/5 hover:bg-accent/5')}>
+            <Button key={link.href} asChild variant="ghost" className={cn('rounded-full', pathname.includes(link.href) && 'bg-accent/5 hover:bg-accent/5')}>
               <Link href={link.href} className="flex items-center gap-2">
                 <link.icon className="h-5 w-5 text-foreground/60" />
                 {link.label}

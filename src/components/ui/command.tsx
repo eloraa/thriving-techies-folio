@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const Command = React.forwardRef<React.ComponentRef<typeof CommandPrimitive>, React.ComponentPropsWithoutRef<typeof CommandPrimitive>>(({ className, ...props }, ref) => (
-  <CommandPrimitive ref={ref} className={cn('flex h-full w-full flex-col overflow-hidden rounded-2xl bg-popover/90 backdrop-blur-2xl text-popover-foreground', className)} {...props} />
+  <CommandPrimitive ref={ref} className={cn('flex h-full w-full flex-col overflow-hidden rounded-2xl bg-popover/90  saturate-[1.8]  backdrop-blur-2xl text-popover-foreground', className)} {...props} />
 ));
 Command.displayName = CommandPrimitive.displayName;
 
@@ -72,7 +72,7 @@ const CommandItem = React.forwardRef<React.ComponentRef<typeof CommandPrimitive.
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default gap-2 select-none items-center rounded-xl px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent/5 data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+      'relative flex cursor-default gap-2 select-none items-center rounded-[10px] px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent/5 data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
       className
     )}
     {...props}

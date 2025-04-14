@@ -22,13 +22,13 @@ export const Dropdown = ({ user, direction, className }: Props) => {
           <AvatarFallback>{user.name[0]}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent collisionPadding={15} side={direction} className="w-56 bg-popover/90">
-        <div className="py-2 px-3">
+      <DropdownMenuContent collisionPadding={15} side={direction} className="w-56 bg-popover/90  saturate-[1.8] ">
+        <div className="p-2">
           <h1 className="font-medium">{user.name}</h1>
           <h2 className="text-sm text-foreground/50">{user.email}</h2>
         </div>
         <DropdownMenuSeparator />
-        <div className="py-1 px-3">
+        <div className="py-1 px-2">
           <div className="flex items-center justify-between">
             <p className="flex items-center gap-2 hover:font-medium md:hover:font-semibold md:font-medium max-md:text-sm">
               <PaintbrushVerticalIcon className="h-5 w-5 text-foreground/60" />
@@ -40,21 +40,21 @@ export const Dropdown = ({ user, direction, className }: Props) => {
           </div>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:!bg-transparent px-3">
+        <DropdownMenuItem className="hover:!bg-transparent px-2">
           <Link href={`/profile/${user.username}`} className="flex items-center gap-2 hover:font-medium md:hover:font-semibold md:font-medium max-md:text-sm">
             <UserIcon className="h-5 w-5 text-foreground/60" />
             Profile
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:!bg-transparent px-3">
+        <DropdownMenuItem className="hover:!bg-transparent px-2">
           <Link href="/dashboard/settings" className="flex items-center gap-2 hover:font-medium md:hover:font-semibold md:font-medium max-md:text-sm">
             <SettingsIcon className="h-5 w-5 text-foreground/60" />
             Settings
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:!bg-transparent px-3">
+        <DropdownMenuItem className="hover:!bg-transparent px-2">
           <Link href="/logout" className="flex items-center gap-2 hover:font-medium md:hover:font-semibold md:font-medium max-md:text-sm">
             <LogOutIcon className="h-5 w-5 text-foreground/60" />
             Logout
