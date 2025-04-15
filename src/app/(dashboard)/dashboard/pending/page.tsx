@@ -42,6 +42,7 @@ export default function Dashboard() {
   return (
     <main className={cn('min-h-full md:pb-4 pb-20', !filteredPosts.length && 'h-full')}>
       <div className="flex items-center justify-between md:pr-14 h-16 sticky top-0 bg-background z-10">
+        <div className='fixed h-16 bg-background top-0 inset-x-0 -z-10'></div>
         <div className="flex items-center gap-4">
           <h1 className="md:text-lg">Posts</h1>
           {selectedPosts.length > 0 && (

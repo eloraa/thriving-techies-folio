@@ -28,7 +28,7 @@ export const Theme = () => {
           <Button
             size="icon"
             variant="ghost"
-            className={cn('rounded-full p-2 h-auto w-auto', theme === 'light' && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground')}
+            className={cn('rounded-full p-2 h-auto w-auto', theme === 'light' && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground text-black')}
             onClick={() => setTheme('light')}
           >
             <span className="sr-only">Light</span>
@@ -42,7 +42,7 @@ export const Theme = () => {
           <Button
             size="icon"
             variant="ghost"
-            className={cn('rounded-full p-2 h-auto w-auto', theme === 'dark' && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground')}
+            className={cn('rounded-full p-2 h-auto w-auto', theme === 'dark' && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground text-black')}
             onClick={() => setTheme('dark')}
           >
             <span className="sr-only">Dark</span>

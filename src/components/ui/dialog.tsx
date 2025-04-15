@@ -25,7 +25,7 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = React.forwardRef<React.ComponentRef<typeof DialogPrimitive.Content>, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & { modal?: boolean }>(
   ({ className, children, modal, ...props }, ref) => (
-    <DialogPortal container={document.querySelector('#__root')}>
+    <DialogPortal container={typeof document !== 'undefined' ? document.querySelector('#__root') : null}>
       {!modal && <DialogOverlay />}
       <div className="fixed inset-0 z-50">
         <div className="z-50 h-full w-full overflow-y-auto grid grid-cols-[10px_1fr_10px] grid-rows-[minmax(10px,1fr)_auto_minmax(10px,1fr)] md:grid-rows-[minmax(20px,1fr)_auto_minmax(20px,1fr)]">
