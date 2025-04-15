@@ -17,8 +17,8 @@ export const Header = () => {
             </Link>
           </Button>
         </div>
-        <div className="min-w-0 overflow-hidden px-4 truncate">
-          <Editable defaultValue="Pixels and Poetry: The Beauty of Shaders in Digital Art" />
+        <div className="min-w-0 overflow-hidden px-4 truncate absolute left-1/2 -translate-x-1/2 max-w-[calc(100%-5rem)]">
+          <Editable placeholder="Title" />
         </div>
         <div className="flex w-12 justify-end">
           <Dropdown user={fakeUser} />

@@ -10,9 +10,10 @@ type Props = {
   value?: string;
   onValueChange?: (value: string) => void;
   onEditChange?: (editing: boolean) => void;
+  placeholder?: string;
 };
 
-export const Editable = ({ value, defaultValue, onValueChange, onEditChange }: Props) => {
+export const Editable = ({ value, defaultValue, onValueChange, onEditChange, placeholder }: Props) => {
   const [isEditing, setIsEditing] = React.useState(false);
   const [internalValue, setInternalValue] = React.useState(defaultValue || '');
   const [isSaving, setIsSaving] = React.useState(false);
@@ -114,24 +115,30 @@ export const Editable = ({ value, defaultValue, onValueChange, onEditChange }: P
     }
   }, [value, isEditing]);
 
+  console.log((!displayValue || displayValue.trim() === '') && !!placeholder);
+
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip open={isEditing || isSaving ? true : undefined}>
         <TooltipTrigger asChild>
-          <div
-            ref={contentRef}
-            role="textbox"
-            contentEditable={isEditing && !isSaving}
-            aria-label="Title"
-            onClick={handleClick}
-            onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
-            onInput={handleInput}
-            suppressContentEditableWarning
-            tabIndex={0}
-            className={cn('outline-none selection:bg-red-500 caret-red-500 min-w-0', !isEditing && 'truncate', isSaving && 'opacity-70 cursor-not-allowed')}
-          >
-            {displayValue}
+          <div className="flex max-w-full overflow-hidden relative h-6 items-center" style={{ minWidth: placeholder ? placeholder.length + 'ch' : '1rem' }}>
+            {(!displayValue || displayValue.trim() === '') && !pendingValue && !!placeholder && <span className="absolute text-muted-foreground pointer-events-none top-0 text-sm">{placeholder}</span>}
+            <div
+              ref={contentRef}
+              role="textbox"
+              contentEditable={isEditing && !isSaving}
+              aria-label="Title"
+              onClick={handleClick}
+              onBlur={handleBlur}
+              onKeyDown={handleKeyDown}
+              onInput={handleInput}
+              suppressContentEditableWarning
+              tabIndex={0}
+              className={cn('outline-none selection:bg-red-500 selection:text-white caret-red-500 text-sm relative min-w-4 h-6', !isEditing && 'truncate', isSaving && 'opacity-70 cursor-not-allowed')}
+              data-placeholder={placeholder}
+            >
+              {displayValue}
+            </div>
           </div>
         </TooltipTrigger>
         <TooltipContent>

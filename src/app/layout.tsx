@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist_Mono, Inter, Noto_Color_Emoji } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import { cookies } from 'next/headers';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+const inter = Inter({
+  variable: '--font-inter',
 });
 
 const geistMono = Geist_Mono({
@@ -22,6 +21,12 @@ const consolas = localFont({
   src: '../lib/assets/fonts/consolas.ttf',
   variable: '--font-consolas',
   weight: '400',
+});
+
+const emoji = Noto_Color_Emoji({
+  variable: '--font-emoji',
+  subsets: ['emoji'],
+  weight: ['400'],
 });
 
 export const metadata: Metadata = {
@@ -41,11 +46,13 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${unifont.variable} ${consolas.variable} ${theme?.value === 'dark' ? 'dark' : 'light'} antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${unifont.variable} ${consolas.variable} ${emoji.variable} ${theme?.value === 'dark' ? 'dark' : 'light'} antialiased`}
       style={{ colorScheme: theme?.value === 'dark' ? 'dark' : 'light' }}
     >
       <body>
-        <div style={{ display: 'contents' }} id="__root">{children}</div>
+        <div style={{ display: 'contents' }} id="__root">
+          {children}
+        </div>
       </body>
     </html>
   );
