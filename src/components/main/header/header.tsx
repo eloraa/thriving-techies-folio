@@ -19,7 +19,7 @@ export const Header = () => {
               ))}
               {fakeUser && (
                 <li>
-                  <Link href="/dashboard" className="flex items-center gap-1">
+                  <Link href="/dashboard" className="flex items-center gap-1" index={7}>
                     Dashboard
                   </Link>
                 </li>

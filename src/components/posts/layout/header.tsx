@@ -85,11 +85,11 @@ const Tools = ({ mode, onModeChange, tags, onTagsChange, slug, onSlugChange, tit
         <TabsList className="h-8 p-0.5">
           <TabsTrigger value="edit" className="flex items-center text-sm gap-1 h-full py-0 data-[state=active]:bg-accent/10">
             <CodeIcon className="size-4" />
-            <span className="-mt-0.5">Code</span>
+            <span className="-mt-0.5 max-md:sr-only">Code</span>
           </TabsTrigger>
           <TabsTrigger value="preview" className="flex items-center text-sm gap-1 h-full py-0 data-[state=active]:bg-accent/10">
             <AppWindowIcon className="size-4" />
-            <span className="-mt-0.5">Preview</span>
+            <span className="-mt-0.5 max-md:sr-only">Preview</span>
           </TabsTrigger>
         </TabsList>
       </Tabs>
@@ -161,7 +161,7 @@ export const Header = ({ mode, onModeChange, title, onTitleChange, tags, onTagsC
           </div>
         </div>
       </header>
-      <div className="fixed bottom-0 inset-x-0 flex justify-center md:hidden z-20 bg-background py-6">
+      <div className="fixed bottom-0 inset-x-0 flex justify-center md:hidden z-20 py-4 bg-background/80 backdrop-blur-xl saturate-[1.8]">
         <Tools mode={mode} onModeChange={onModeChange} tags={tags} onTagsChange={onTagsChange} slug={slug} onSlugChange={onSlugChange} title={title} content={content} coverPhoto={coverPhoto} />
       </div>
     </>

@@ -27,9 +27,9 @@ export const Settings = ({ tags, onTagsChange, slug, onSlugChange }: SettingsPro
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size="sm" variant="secondary" className="[&_svg]:size-3.5 gap-1 rounded-full bg-accent/15">
+        <Button size="sm" variant="secondary" className="[&_svg]:size-3.5 gap-1 rounded-full bg-accent/15 max-md:px-2.5">
           <SettingsIcon />
-          <span className="-mt-0.5">Settings</span>
+          <span className="-mt-0.5 max-md:sr-only">Settings</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-[16rem] py-4 px-0">
@@ -39,12 +39,7 @@ export const Settings = ({ tags, onTagsChange, slug, onSlugChange }: SettingsPro
             Slug
           </div>
           <div className="mt-2 w-full">
-            <Input 
-              placeholder="toasty-muffin" 
-              className="w-full text-sm h-8" 
-              value={slug}
-              onChange={(e) => onSlugChange(e.target.value)}
-            />
+            <Input placeholder="toasty-muffin" className="w-full text-sm h-8" value={slug} onChange={e => onSlugChange(e.target.value)} />
           </div>
         </div>
         <DropdownMenuSeparator />

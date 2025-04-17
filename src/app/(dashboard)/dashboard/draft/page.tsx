@@ -156,24 +156,24 @@ export default function Dashboard() {
                   onAfterDelete={handleAfterDelete}
                   className={{ base: 'absolute top-3 right-3 z-[1] text-white', open: 'opacity-0 invisible group-hover:opacity-100 group-hover:visible' }}
                 />
-                <Link href={'/posts/edit/' + draft.id}>
-                  <figure className="h-40 md:h-56 relative overflow-hidden rounded-lg" style={{ backgroundColor: generateColor() }} suppressHydrationWarning>
-                    {draft.coverPhoto ? (
-                      <Image src={draft.coverPhoto} alt={draft.title} fill className="object-cover" />
-                    ) : (
-                      <div className="w-full h-full bg-accent/5 flex items-center justify-center">
-                        <p className="text-foreground/50">No cover image</p>
-                      </div>
-                    )}
-                  </figure>
-                  <div className="mt-2">
+                <figure className="h-40 md:h-56 relative overflow-hidden rounded-lg" style={{ backgroundColor: generateColor() }} suppressHydrationWarning>
+                  {draft.coverPhoto ? (
+                    <Image src={draft.coverPhoto} alt={draft.title} fill className="object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-accent/5 flex items-center justify-center">
+                      <p className="text-foreground/50">No cover image</p>
+                    </div>
+                  )}
+                </figure>
+                <div className="mt-2">
+                  <Link href={'/posts/edit/' + draft.id}>
                     <h3 className="font-medium">{draft.title || 'Untitled Post'}</h3>
-                    <p className="text-sm text-foreground/80">
-                      By <span className="font-medium text-primary">{users[0]?.name}</span>
-                    </p>
-                    <h4 className="font-mono text-xs uppercase mt-2">{formatDistance(draft.updatedAt, new Date(), { addSuffix: true })}</h4>
-                  </div>
-                </Link>
+                  </Link>
+                  <p className="text-sm text-foreground/80">
+                    By <span className="font-medium text-primary">{users[0]?.name}</span>
+                  </p>
+                  <h4 className="font-mono text-xs uppercase mt-2">{formatDistance(draft.updatedAt, new Date(), { addSuffix: true })}</h4>
+                </div>
               </div>
             </div>
           ))}
