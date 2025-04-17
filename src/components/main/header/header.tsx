@@ -1,4 +1,4 @@
-import { links } from '@/lib/const';
+import { fakeUser, links } from '@/lib/const';
 import { Link } from './link';
 import { Nav } from './nav';
 
@@ -17,6 +17,13 @@ export const Header = () => {
                   </Link>
                 </li>
               ))}
+              {fakeUser && (
+                <li>
+                  <Link href="/dashboard" className="flex items-center gap-1">
+                    Dashboard
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
         </div>

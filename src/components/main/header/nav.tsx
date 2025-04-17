@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/all';
 import { Link } from './link';
-import { links } from '@/lib/const';
+import { fakeUser, links } from '@/lib/const';
 
 export const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -81,6 +81,11 @@ export const Nav = () => {
                   </Link>
                 </DropdownMenuItem>
               ))}
+              {fakeUser && (
+                <DropdownMenuItem>
+                  <Link href="/dashboard">Dashboard</Link>
+                </DropdownMenuItem>
+              )}
             </nav>
           </DropdownMenuContent>
         </DropdownMenu>
