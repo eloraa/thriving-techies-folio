@@ -1,16 +1,78 @@
 import type { Metadata } from 'next';
-import { Geist_Mono, Inter, Noto_Color_Emoji } from 'next/font/google';
+import { Geist_Mono, Noto_Color_Emoji } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import { cookies } from 'next/headers';
 
-const inter = Inter({
-  variable: '--font-inter',
-});
-
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+});
+
+const segoeUI = localFont({
+  src: [
+    {
+      path: '../fonts/segoe-ui/segoe-ui.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-italic.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-bold-italic.ttf',
+      weight: '700',
+      style: 'italic',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-light.ttf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-light-italic.ttf',
+      weight: '300',
+      style: 'italic',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-semibold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-semibold-italic.ttf',
+      weight: '600',
+      style: 'italic',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-semilight.ttf',
+      weight: '350',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-semilight-italic.ttf',
+      weight: '350',
+      style: 'italic',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-black.ttf',
+      weight: '900',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/segoe-ui/segoe-ui-black-italic.ttf',
+      weight: '900',
+      style: 'italic',
+    },
+  ],
+  variable: '--font-segoe-ui',
 });
 
 const unifont = localFont({
@@ -46,7 +108,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} ${unifont.variable} ${consolas.variable} ${emoji.variable} ${theme?.value === 'dark' ? 'dark' : 'light'} antialiased`}
+      className={`${segoeUI.variable} ${geistMono.variable} ${unifont.variable} ${consolas.variable} ${emoji.variable} ${segoeUI.variable} ${theme?.value === 'dark' ? 'dark' : 'light'} antialiased`}
       style={{ colorScheme: theme?.value === 'dark' ? 'dark' : 'light' }}
     >
       <body>

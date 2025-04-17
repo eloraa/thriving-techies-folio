@@ -115,14 +115,14 @@ export const Editable = ({ value, defaultValue, onValueChange, onEditChange, pla
     }
   }, [value, isEditing]);
 
-  console.log((!displayValue || displayValue.trim() === '') && !!placeholder);
-
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip open={isEditing || isSaving ? true : undefined}>
         <TooltipTrigger asChild>
           <div className="flex max-w-full overflow-hidden relative h-6 items-center" style={{ minWidth: placeholder ? placeholder.length + 'ch' : '1rem' }}>
-            {(!displayValue || displayValue.trim() === '') && !pendingValue && !!placeholder && <span className="absolute text-muted-foreground pointer-events-none top-0 text-sm">{placeholder}</span>}
+            {(!displayValue || displayValue.trim() === '') && (!pendingValue || pendingValue.trim() === '') && !!placeholder && (
+              <span className="absolute text-muted-foreground pointer-events-none text-sm top-1/2 -translate-y-1/2">{placeholder}</span>
+            )}
             <div
               ref={contentRef}
               role="textbox"
@@ -134,14 +134,19 @@ export const Editable = ({ value, defaultValue, onValueChange, onEditChange, pla
               onInput={handleInput}
               suppressContentEditableWarning
               tabIndex={0}
-              className={cn('outline-none selection:bg-red-500 selection:text-white caret-red-500 text-sm relative min-w-4 h-6', !isEditing && 'truncate', isSaving && 'opacity-70 cursor-not-allowed')}
+              className={cn(
+                'outline-none selection:bg-violet-500/30 selection:text-foreground caret-red-500 text-sm relative h-6 p-0.5 selection:rounded-md',
+                !isEditing && 'truncate',
+                isSaving && 'opacity-70 cursor-not-allowed'
+              )}
+              style={{ minWidth: placeholder ? placeholder.length + 'ch' : '1rem' }}
               data-placeholder={placeholder}
             >
               {displayValue}
             </div>
           </div>
         </TooltipTrigger>
-        <TooltipContent>
+        <TooltipContent align="start">
           {isSaving ? (
             <div className="flex items-center gap-1">
               <Spinner className="size-3" /> Saving...

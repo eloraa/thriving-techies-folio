@@ -1,6 +1,5 @@
 'use client';
 
-import { FileUploader } from './file-uploader';
 import { Header } from '@/components/posts/layout/header';
 import { CustomMarkdownEditor } from '@/components/markdown/custom-markdown-editor';
 import { MarkdownPreview } from '@/components/markdown/markdown';
@@ -10,10 +9,12 @@ import { Share } from '@/app/(main)/blog/[slug]/share';
 import Link from 'next/link';
 import Image from 'next/image';
 import { fakeUser } from '@/lib/const';
-import { saveCurrentDraft, getCurrentDraft } from '@/lib/db';
+import { saveCurrentDraft, getPost } from '@/lib/db';
 import { Spinner } from '@/components/ui/spinner';
+import { useParams } from 'next/navigation';
+import { FileUploader } from '../../new/file-uploader';
 
-export default function NewPost() {
+export default function EditPost() {
   const [content, setContent] = useState('');
   const [mode, setMode] = useState<'edit' | 'preview'>('edit');
   const [title, setTitle] = useState('');
@@ -22,21 +23,20 @@ export default function NewPost() {
   const [tags, setTags] = useState<string[]>([]);
   const [slug, setSlug] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const params = useParams();
 
   useEffect(() => {
-    const loadDraft = async () => {
+    const loadPost = async () => {
       try {
-        const draft = await getCurrentDraft();
-
-        if (draft) {
-          setTitle(draft.title);
-          setContent(draft.content);
-          setTags(draft.tags);
-          setSlug(draft.slug);
-          if (draft.coverPhoto) {
+        const post = await getPost(params.id as string);
+        if (post) {
+          setTitle(post.title);
+          setContent(post.content);
+          setTags(post.tags);
+          setSlug(post.slug);
+          if (post.coverPhoto) {
             try {
-              const base64Data = draft.coverPhoto.split(',')[1];
-
+              const base64Data = post.coverPhoto.split(',')[1];
               const bs = atob(base64Data);
               const buffer = new ArrayBuffer(bs.length);
               const ba = new Uint8Array(buffer);
@@ -44,26 +44,32 @@ export default function NewPost() {
                 ba[i] = bs.charCodeAt(i);
               }
               const blob = new Blob([ba], { type: 'image/png' });
-
               const file = new File([blob], 'cover.jpg', { type: 'image/jpeg' });
-
-              console.log(file);
-
               setCoverPhoto(file);
-              setCoverPhotoUrl(draft.coverPhoto);
+              setCoverPhotoUrl(post.coverPhoto);
             } catch (error) {
               console.error('Error loading cover photo:', error);
             }
           }
+
+          // Save to currentDraft for auto-save functionality
+          await saveCurrentDraft({
+            title: post.title,
+            content: post.content,
+            coverPhoto: post.coverPhoto,
+            tags: post.tags,
+            slug: post.slug,
+            status: post.status,
+          });
         }
       } catch (error) {
-        console.error('Error loading draft:', error);
+        console.error('Error loading post:', error);
       } finally {
         setIsLoading(false);
       }
     };
-    loadDraft();
-  }, []);
+    loadPost();
+  }, [params.id]);
 
   useEffect(() => {
     if (isLoading) return;

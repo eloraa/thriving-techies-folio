@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     <main className="container py-10 md:max-w-3xl mx-auto">
       <div className="flex items-center justify-center flex-col border-b pb-8 border-foreground/15">
         <figure className="relative h-72 w-full md:max-w-lg overflow-hidden rounded-2xl">
-          <Image className="object-cover" src="/images/cover2.png" fill alt="Pixels and Poetry: The Beauty of Shaders in Digital Art" />
+          <Image className="object-contain" src="/images/cover2.png" fill alt="Pixels and Poetry: The Beauty of Shaders in Digital Art" />
         </figure>
         <div className="space-y-2">
           <h1 className="text-center mt-8 text-lg lg:text-3xl font-semibold max-w-lg mx-auto">Pixels and Poetry: The Beauty of Shaders in Digital Art</h1>

@@ -69,7 +69,7 @@ export const BlogSection = () => {
               <figure className="h-64 md:h-72" style={{ backgroundColor: generateColor() }}>
                 {/* image goes here */}
               </figure>
-              <div className="space-y-2 p-4">
+              <div className="p-4">
                 <Link href="/blog/pixels-and-poetry">{post.title}</Link>
                 <p className="text-sm text-foreground/80">
                   By{' '}
@@ -77,7 +77,7 @@ export const BlogSection = () => {
                     Elora
                   </Link>
                 </p>
-                <h4 className="font-mono text-xs uppercase">{formatDistance(post.created_at, new Date(), { addSuffix: true })}</h4>
+                <h4 className="font-mono text-xs uppercase mt-2">{formatDistance(post.created_at, new Date(), { addSuffix: true })}</h4>
               </div>
             </div>
           ))}

@@ -30,7 +30,7 @@ export const Dropdown = ({ user, direction, className }: Props) => {
         <DropdownMenuSeparator />
         <div className="py-1 px-2">
           <div className="flex items-center justify-between">
-            <p className="flex items-center gap-2 hover:font-medium md:hover:font-semibold md:font-medium max-md:text-sm">
+            <p className="flex items-center gap-2 font-medium max-md:text-sm">
               <PaintbrushVerticalIcon className="h-5 w-5 text-foreground/60" />
               Theme
             </p>
@@ -41,21 +41,21 @@ export const Dropdown = ({ user, direction, className }: Props) => {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="hover:!bg-transparent px-2">
-          <Link href={`/profile/${user.username}`} className="flex items-center gap-2 hover:font-medium md:hover:font-semibold md:font-medium max-md:text-sm">
+          <Link href={`/profile/${user.username}`} className="flex items-center gap-2 font-medium max-md:text-sm">
             <UserIcon className="h-5 w-5 text-foreground/60" />
             Profile
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="hover:!bg-transparent px-2">
-          <Link href="/dashboard/settings" className="flex items-center gap-2 hover:font-medium md:hover:font-semibold md:font-medium max-md:text-sm">
+          <Link href="/dashboard/settings" className="flex items-center gap-2 font-medium max-md:text-sm">
             <SettingsIcon className="h-5 w-5 text-foreground/60" />
             Settings
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="hover:!bg-transparent px-2">
-          <Link href="/logout" className="flex items-center gap-2 hover:font-medium md:hover:font-semibold md:font-medium max-md:text-sm">
+          <Link href="/logout" className="flex items-center gap-2 font-medium max-md:text-sm">
             <LogOutIcon className="h-5 w-5 text-foreground/60" />
             Logout
           </Link>

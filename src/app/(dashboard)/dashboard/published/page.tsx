@@ -12,10 +12,12 @@ import { posts, users } from './const';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Actions } from './actions';
 import { buttonVariants } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export default function Dashboard() {
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const router = useRouter();
 
   const filteredPosts = posts.filter(post => {
     if (selectedUser === 'all') return true;
@@ -42,7 +44,7 @@ export default function Dashboard() {
   return (
     <main className={cn('min-h-full md:pb-4 pb-20', !filteredPosts.length && 'h-full')}>
       <div className="flex items-center justify-between md:pr-14 h-16 sticky top-0 bg-background z-10">
-        <div className='fixed h-16 bg-background top-0 inset-x-0 -z-10'></div>
+        <div className="fixed h-16 bg-background top-0 inset-x-0 -z-10"></div>
         <div className="flex items-center gap-4">
           <h1 className="md:text-lg">Posts</h1>
           {selectedPosts.length > 0 && (
@@ -59,7 +61,12 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="-mx-2 flex items-center justify-between">
-        <Tabs defaultValue="published" onValueChange={() => {}}>
+        <Tabs
+          defaultValue="published"
+          onValueChange={value => {
+            router.push('/dashboard/' + value);
+          }}
+        >
           <TabsList>
             <TabsTrigger value="published">Published</TabsTrigger>
             <TabsTrigger value="draft">Draft</TabsTrigger>
@@ -95,23 +102,28 @@ export default function Dashboard() {
           {filteredPosts.map(post => {
             const user = users.find(u => u.id === post.userid);
             return (
-              <div key={post.id} className={cn('flex flex-col border-foreground/15 relative group', selectedPosts.includes(post.id) && 'ring-1 ring-blue-500 bg-blue-500/15 md:bg-blue-500/5')}>
-                <Actions data={post} className={{ base: 'absolute top-3 right-3 z-[1] text-white', open: 'opacity-0 invisible group-hover:opacity-100 group-hover:visible' }} />
-                <div className={cn('absolute bottom-3 right-3', !selectedPosts.includes(post.id) && 'hidden group-hover:block')}>
+              <div
+                key={post.id}
+                className={cn('flex flex-col border-foreground/15 relative group rounded-[0.45rem]', selectedPosts.includes(post.id) && 'ring-1 ring-blue-500 bg-blue-500/15 md:bg-blue-500/5')}
+              >
+                <div className={cn('absolute bottom-3 right-3 z-[1]', !selectedPosts.includes(post.id) && 'hidden group-hover:block')}>
                   <Checkbox checked={selectedPosts.includes(post.id)} onCheckedChange={() => handlePostSelect(post.id)} />
                 </div>
-                <figure className="h-40 md:h-56 relative overflow-hidden" style={{ backgroundColor: generateColor() }} suppressHydrationWarning>
-                  <Image src={post.image} alt={post.title} fill className="object-cover" />
-                </figure>
-                <div className="mt-2">
-                  <Link href="/blog/pixels-and-poetry">{post.title}</Link>
-                  <p className="text-sm text-foreground/80">
-                    By{' '}
-                    <Link href="/profile/elora" className="font-medium text-primary">
-                      {user?.name}
-                    </Link>
-                  </p>
-                  <h4 className="font-mono text-xs uppercase mt-2">{formatDistance(post.created_at, new Date(), { addSuffix: true })}</h4>
+                <div className={cn('flex flex-col relative transition-transform', selectedPosts.includes(post.id) && 'scale-[0.97]')}>
+                  <Actions data={post} className={{ base: 'absolute top-3 right-3 z-[1] text-white', open: 'opacity-0 invisible group-hover:opacity-100 group-hover:visible' }} />
+                  <figure className="h-40 md:h-56 relative overflow-hidden rounded-lg" style={{ backgroundColor: generateColor() }} suppressHydrationWarning>
+                    <Image src={post.image} alt={post.title} fill className="object-cover" />
+                  </figure>
+                  <div className="mt-2">
+                    <Link href="/blog/pixels-and-poetry">{post.title}</Link>
+                    <p className="text-sm text-foreground/80">
+                      By{' '}
+                      <Link href="/profile/elora" className="font-medium text-primary">
+                        {user?.name}
+                      </Link>
+                    </p>
+                    <h4 className="font-mono text-xs uppercase mt-2">{formatDistance(post.created_at, new Date(), { addSuffix: true })}</h4>
+                  </div>
                 </div>
               </div>
             );

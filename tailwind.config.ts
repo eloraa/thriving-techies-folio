@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { fontFamily } from 'tailwindcss/defaultTheme';
 
 export default {
   darkMode: ['class'],
@@ -7,7 +8,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: 'var(--font-inter), var(--font-emoji)',
+        sans: ['var(--font-segoe-ui),  var(--font-emoji)', ...fontFamily.sans],
         unifont: 'var(--font-unifont)',
         mono: 'var(--font-consolas)',
         'geist-mono': 'var(--font-geist-mono)',
