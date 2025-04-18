@@ -3,9 +3,10 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { AvatarImage } from '@radix-ui/react-avatar';
 import { Theme } from './theme';
 import { LogOutIcon, PaintbrushVerticalIcon, SettingsIcon, UserIcon } from 'lucide-react';
-import { User } from './layout';
+
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { User } from '@/types';
 
 type Props = {
   user: User;

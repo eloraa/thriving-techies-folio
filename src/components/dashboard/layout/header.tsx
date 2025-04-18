@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { User } from './layout';
 import { Dropdown } from './dropdown';
+import { User } from '@/types';
 
 export const Header = ({ user }: { user: User }) => {
   return (

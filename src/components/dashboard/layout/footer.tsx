@@ -1,7 +1,6 @@
 'use client';
 import { buttonVariants } from '@/components/ui/button';
 import { Dropdown } from './dropdown';
-import { User } from './layout';
 import { Tooltip, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { TooltipContent } from '@radix-ui/react-tooltip';
 import { dashboardLinks } from '@/lib/const';
@@ -9,6 +8,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { PencilIcon, SettingsIcon } from 'lucide-react';
+import { User } from '@/types';
 
 export const Footer = ({ user }: { user: User }) => {
   const pathname = usePathname();

@@ -1,4 +1,4 @@
-import { User } from '@/components/dashboard/layout/layout';
+import { User } from '@/types';
 import { HomeIcon, UsersIcon } from 'lucide-react';
 
 export const links = [
@@ -49,6 +49,7 @@ export const fakeUser = {
   email: 'me@aruu.me',
   bio: 'UI Designer | Developer | Generative Artist',
   role: 'Frontend Developer',
+  permissions: ['*'],
   website: 'https://aruu.me',
   createdAt: '2023-10-01T00:00:00.000Z',
   updatedAt: '2023-10-01T00:00:00.000Z',

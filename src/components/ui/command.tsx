@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const Command = React.forwardRef<React.ComponentRef<typeof CommandPrimitive>, React.ComponentPropsWithoutRef<typeof CommandPrimitive>>(({ className, ...props }, ref) => (
-  <CommandPrimitive ref={ref} className={cn('flex h-full w-full flex-col overflow-hidden rounded-2xl bg-popover/90  saturate-[1.8]  backdrop-blur-2xl text-popover-foreground', className)} {...props} />
+  <CommandPrimitive ref={ref} className={cn('flex h-full w-full flex-col overflow-hidden rounded-2xl bg-popover/80 saturate-[1.8] backdrop-blur-2xl text-popover-foreground', className)} {...props} />
 ));
 Command.displayName = CommandPrimitive.displayName;
 
@@ -64,7 +64,7 @@ const CommandGroup = React.forwardRef<React.ComponentRef<typeof CommandPrimitive
 CommandGroup.displayName = CommandPrimitive.Group.displayName;
 
 const CommandSeparator = React.forwardRef<React.ComponentRef<typeof CommandPrimitive.Separator>, React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>>(({ className, ...props }, ref) => (
-  <CommandPrimitive.Separator ref={ref} className={cn('-mx-1 h-px bg-border', className)} {...props} />
+  <CommandPrimitive.Separator ref={ref} className={cn('-mx-1 h-px bg-accent/5', className)} {...props} />
 ));
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
 

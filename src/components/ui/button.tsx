@@ -40,4 +40,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, va
 });
 Button.displayName = 'Button';
 
-export { Button, buttonVariants };
+interface ButtonGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(({ className, ...props }, ref) => {
+  return <div className={cn('flex items-center rounded-md group button-group', className)} ref={ref} {...props} />;
+});
+ButtonGroup.displayName = 'ButtonGroup';
+
+export { Button, ButtonGroup, buttonVariants };
