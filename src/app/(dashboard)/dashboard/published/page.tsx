@@ -112,7 +112,7 @@ export default function Dashboard() {
                 <div className={cn('flex flex-col relative transition-transform', selectedPosts.includes(post.id) && 'scale-[0.97]')}>
                   <Actions data={post} className={{ base: 'absolute top-3 right-3 z-[1] text-white', open: 'opacity-0 invisible group-hover:opacity-100 group-hover:visible' }} />
                   <figure className="h-40 md:h-56 relative overflow-hidden rounded-lg" style={{ backgroundColor: generateColor() }} suppressHydrationWarning>
-                    <Image src={post.image} alt={post.title} fill className="object-cover" />
+                    <Image src={post.image} alt={post.title} fill className="object-contain" />
                   </figure>
                   <div className="mt-2">
                     <Link href="/blog/pixels-and-poetry">{post.title}</Link>

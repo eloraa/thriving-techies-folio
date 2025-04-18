@@ -129,9 +129,8 @@
     font-weight: 500;
     color: hsl(var(--foreground));
     line-height: 1.45;
-    background-color: hsl(var(--popover));
     margin-bottom: 16px;
-    @apply rounded-2xl font-mono;
+    @apply rounded-2xl font-mono bg-accent/5 dark:bg-popover;
   }
 
   .markdown-body code {

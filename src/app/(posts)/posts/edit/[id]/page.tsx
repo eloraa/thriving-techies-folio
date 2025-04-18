@@ -151,7 +151,7 @@ export default function EditPost() {
           </div>
         </div>
       ) : (
-        <div className="container py-10 md:max-w-3xl mx-auto">
+        <div className="container py-10 md:max-w-3xl mx-auto max-md:pb-16">
           <div className="flex items-center justify-center flex-col border-b pb-8 border-foreground/15">
             <figure className="relative h-72 w-full md:max-w-lg overflow-hidden rounded-2xl">
               {coverPhotoUrl ? (

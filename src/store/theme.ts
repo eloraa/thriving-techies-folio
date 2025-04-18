@@ -22,18 +22,10 @@ const getSystemTheme = (): 'light' | 'dark' => {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
-const getTheme = (): 'light' | 'dark' => {
-  if (typeof window === 'undefined') return 'light';
-  const savedTheme = document.cookie
-    .split('; ')
-    .find(row => row.startsWith('theme='))
-    ?.split('=')[1] as 'light' | 'dark' | 'system' | undefined;
-  const theme = savedTheme === 'system' ? getSystemTheme() : savedTheme;
-  return theme || 'light';
-};
+
 
 export const useTheme = create<ThemeState>(set => ({
-  theme: getTheme(),
+  theme: 'light',
   setTheme: theme => {
     const newTheme = theme === 'system' ? getSystemTheme() : theme;
     set({ theme: newTheme });

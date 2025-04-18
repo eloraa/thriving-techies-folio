@@ -36,14 +36,11 @@ export default function Dashboard() {
   const loadDrafts = useCallback(async () => {
     setIsLoading(true);
     try {
-      // Get current draft
       const currentDraft = await getCurrentDraft();
 
-      // Get all posts and filter drafts
       const allPosts = await getAllPosts();
       const draftPosts = allPosts.filter(post => post.status === 'draft');
 
-      // Combine current draft with other drafts, ensuring no duplicates
       const allDrafts = currentDraft ? [currentDraft, ...draftPosts.filter(post => post.id !== currentDraft.id)] : draftPosts;
 
       setDrafts(allDrafts);
@@ -158,7 +155,7 @@ export default function Dashboard() {
                 />
                 <figure className="h-40 md:h-56 relative overflow-hidden rounded-lg" style={{ backgroundColor: generateColor() }} suppressHydrationWarning>
                   {draft.coverPhoto ? (
-                    <Image src={draft.coverPhoto} alt={draft.title} fill className="object-cover" />
+                    <Image src={draft.coverPhoto} alt={draft.title} fill className="object-contain" />
                   ) : (
                     <div className="w-full h-full bg-accent/5 flex items-center justify-center">
                       <p className="text-foreground/50">No cover image</p>

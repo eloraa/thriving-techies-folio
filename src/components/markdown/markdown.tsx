@@ -355,6 +355,22 @@ export const MarkdownPreview: React.FC<MarkdownPreviewProps> = React.memo(({ con
       }
       return <code>{code}</code>;
     },
+    table: ({ children }: React.ComponentPropsWithoutRef<'table'>) => (
+      <div className="w-full my-6 overflow-x-auto">
+        <table className="w-full border-collapse text-sm">
+          {children}
+        </table>
+      </div>
+    ),
+    thead: ({ children }: React.ComponentPropsWithoutRef<'thead'>) => (
+      <thead className="border-b border-border">{children}</thead>
+    ),
+    th: ({ children }: React.ComponentPropsWithoutRef<'th'>) => (
+      <th className="p-4 text-left font-medium text-muted-foreground bg-muted/50">{children}</th>
+    ),
+    td: ({ children }: React.ComponentPropsWithoutRef<'td'>) => (
+      <td className="p-4 border-b border-border">{children}</td>
+    ),
   }), [hideCaption]);
 
   return (

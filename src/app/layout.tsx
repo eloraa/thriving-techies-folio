@@ -3,6 +3,7 @@ import { Geist_Mono, Noto_Color_Emoji } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import { cookies } from 'next/headers';
+import { ResolveTheme } from '@/components/main/client-handler/resolve-theme';
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
@@ -113,6 +114,7 @@ export default async function RootLayout({
     >
       <body>
         <div style={{ display: 'contents' }} id="__root">
+          <ResolveTheme theme={theme?.value === 'dark' ? 'dark' : 'light'} />
           {children}
         </div>
       </body>

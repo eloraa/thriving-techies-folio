@@ -291,11 +291,18 @@ const ImagePopover: React.FC<ImagePopoverProps> = ({ onImage }) => {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" size="icon" className="h-8 w-8 flex items-center justify-center hover:bg-accent/10 rounded-md">
-          <ImageIcon className="size-4" />
-        </Button>
-      </PopoverTrigger>
+      <TooltipProvider delayDuration={0}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="icon" className="h-8 w-8 flex items-center justify-center hover:bg-accent/10 rounded-md">
+                <ImageIcon className="size-4" />
+              </Button>
+            </PopoverTrigger>
+          </TooltipTrigger>
+          <TooltipContent>Insert Image</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <PopoverContent className="w-80 max-h-96 overflow-y-auto">
         <div className="space-y-4">
           <div className="space-y-2">
@@ -310,6 +317,54 @@ const ImagePopover: React.FC<ImagePopoverProps> = ({ onImage }) => {
 
           <Button variant="secondary" onClick={handleSubmit} className="w-full rounded-full">
             Insert Image
+          </Button>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+interface LinkPopoverProps {
+  onLink: (text: string, url: string) => void;
+}
+
+const LinkPopover: React.FC<LinkPopoverProps> = ({ onLink }) => {
+  const [text, setText] = useState('');
+  const [url, setUrl] = useState('');
+
+  const handleSubmit = () => {
+    if (!url) return;
+    onLink(text, url);
+  };
+
+  return (
+    <Popover>
+      <TooltipProvider delayDuration={0}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="icon" className="h-8 w-8 flex items-center justify-center hover:bg-accent/10 rounded-md">
+                <Link2 className="size-4" />
+              </Button>
+            </PopoverTrigger>
+          </TooltipTrigger>
+          <TooltipContent>Insert Link</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <PopoverContent className="w-80 max-h-96 overflow-y-auto">
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="link-text">Link Text</Label>
+            <Input id="link-text" placeholder="Enter link text" value={text} onChange={e => setText(e.target.value)} />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="link-url">URL</Label>
+            <Input id="link-url" placeholder="Enter URL" value={url} onChange={e => setUrl(e.target.value)} />
+          </div>
+
+          <Button variant="secondary" onClick={handleSubmit} className="w-full rounded-full">
+            Insert Link
           </Button>
         </div>
       </PopoverContent>
@@ -458,10 +513,7 @@ export const CustomMarkdownEditor: React.FC<CustomMarkdownEditorProps> = ({ valu
     insertText('\n```\n', text || 'code', '\n```\n');
   };
 
-  const handleLink = () => {
-    const { text } = getSelectedText();
-    const url = window.prompt('Enter URL:');
-    if (!url) return;
+  const handleLink = (text: string, url: string) => {
     insertText('[', text || 'link', `](${url})`);
   };
 
@@ -513,7 +565,7 @@ export const CustomMarkdownEditor: React.FC<CustomMarkdownEditorProps> = ({ valu
           <HeadingDropdown onSelect={handleHeading} />
           <ToolbarButton icon={<Quote className="size-4" />} tooltip="Quote" onClick={handleQuote} />
           <CodeDropdown onInlineCode={handleInlineCode} onCodeBlock={handleCodeBlock} />
-          <ToolbarButton icon={<Link2 className="size-4" />} tooltip="Link" onClick={handleLink} />
+          <LinkPopover onLink={handleLink} />
           <ImagePopover onImage={handleImage} />
           <ToolbarButton icon={<List className="size-4" />} tooltip="List" onClick={handleList} />
           <ToolbarButton icon={<ListOrdered className="size-4" />} tooltip="Ordered List" onClick={handleOrderedList} />
