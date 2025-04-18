@@ -1,15 +1,16 @@
 import Image from 'next/image';
 import { Share } from './share';
 import { MarkdownPreview } from '@/components/markdown/markdown';
-import { blog } from './blog';
+import { blog as blogData } from './blog';
 import Link from 'next/link';
 import { TextToSpeech } from '@/app/(main)/blog/[slug]/text-to-speech';
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-
   console.log(slug);
 
+  // temporary blog
+  const blog = decodeURIComponent(blogData);
   return (
     <main className="container py-10 md:max-w-3xl mx-auto">
       <div className="flex items-center justify-center flex-col border-b pb-8 border-foreground/15">
@@ -37,12 +38,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       </div>
 
       <div className="py-3 flex items-center justify-between">
-        <TextToSpeech text={decodeURIComponent(blog)} />
+        <TextToSpeech text={blog} />
         <Share content={typeof window !== 'undefined' ? window.location.href : ''} />
       </div>
 
       <div className="mt-10">
-        <MarkdownPreview content={decodeURIComponent(blog)} />
+        <MarkdownPreview content={blog} />
       </div>
     </main>
   );
