@@ -75,7 +75,7 @@ export function EditUserForm({ user }: { user: User }) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    router.back();
+    router.push('/teams');
   }
 
   return (

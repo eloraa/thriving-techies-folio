@@ -85,7 +85,7 @@ export function AddUserForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    router.back();
+    router.push('/teams');
   }
 
   return (
