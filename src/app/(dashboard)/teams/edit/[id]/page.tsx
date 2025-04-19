@@ -3,8 +3,9 @@ import { User } from '@/types';
 import { users } from '../../const';
 import { EditUserForm } from '@/app/@user/(.)teams/edit/[id]/edit-user-form';
 
-export default function EditUserPage({ params }: { params: { id: string } }) {
-  const user = users.find((u: User) => u.id === params.id);
+export default async function EditUserPage({ params }: { params: Promise<{ id: string }> }) {
+  const id = (await params).id;
+  const user = users.find((u: User) => u.id === id);
 
   if (!user) {
     notFound();
