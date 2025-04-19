@@ -8,6 +8,7 @@ import { User } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { formatDistance } from 'date-fns';
 import { ShieldIcon } from 'lucide-react';
+import { Actions } from './actions';
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -108,8 +109,6 @@ export const columns: ColumnDef<User>[] = [
           {socials.map(social => {
             const Icon = getSocialIcon(social.type);
 
-            console.log(Icon);
-
             return (
               <a key={social.url} href={social.url} target="_blank" rel="noopener noreferrer" className="leading-none">
                 {Icon ? <Icon /> : <span className="hover:underline text-xs font-mono uppercase">{social.type}</span>}
@@ -151,5 +150,13 @@ export const columns: ColumnDef<User>[] = [
       const permissions = row.getValue(id) as string[];
       return value.some((v: string) => permissions.includes(v));
     },
+  },
+  {
+    accessorKey: 'actions',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Action" />,
+    cell: ({ row }) => {
+      return <Actions data={row.original} />;
+    },
+    enableSorting: false,
   },
 ];

@@ -3,12 +3,14 @@
 import { Table, Column } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useBreakpoints } from '@/lib/useBreakpoints';
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
 }
 
 export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>) {
+  const breakpoints = useBreakpoints();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -19,7 +21,7 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
           <span className="sr-only">View</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[200px]">
+      <DropdownMenuContent align={breakpoints === 'md' || breakpoints === 'sm' ? 'center' : 'end'} className="w-[200px]">
         <DropdownMenuLabel className="text-sm font-normal text-foreground/60 pb-2">Toggle columns</DropdownMenuLabel>
         {table
           .getAllColumns()

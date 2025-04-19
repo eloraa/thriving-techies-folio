@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { cookies } from 'next/headers';
 import { ResolveTheme } from '@/components/main/client-handler/resolve-theme';
+import React from 'react';
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
@@ -99,8 +100,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  user,
 }: Readonly<{
   children: React.ReactNode;
+  user: React.ReactNode;
 }>) {
   const cookiesStore = await cookies();
 
@@ -116,6 +119,7 @@ export default async function RootLayout({
         <div style={{ display: 'contents' }} id="__root">
           <ResolveTheme theme={theme?.value === 'dark' ? 'dark' : 'light'} />
           {children}
+          {user}
         </div>
       </body>
     </html>

@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command';
 import { CheckIcon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useBreakpoints } from '@/lib/useBreakpoints';
 
 interface DataTableFacetedFilterOption {
   label: string;
@@ -29,7 +30,8 @@ export function DataTableFacetedFilter<TData>({ column, title, defaultValue, opt
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(column?.getFilterValue() as string[]);
 
-  // Calculate counts for each option
+  const breakpoints = useBreakpoints();
+
   const getCounts = React.useCallback(
     (option: DataTableFacetedFilterOption) => {
       if (!facets) return 0;
@@ -88,7 +90,7 @@ export function DataTableFacetedFilter<TData>({ column, title, defaultValue, opt
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[250px] p-0" align="start">
+        <PopoverContent className="w-[250px] p-0" align={breakpoints === 'md' || breakpoints === 'sm' ? 'center' : 'start'}>
           <Command>
             <CommandInput placeholder={title} />
             <CommandList>
