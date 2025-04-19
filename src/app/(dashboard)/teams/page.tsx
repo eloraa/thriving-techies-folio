@@ -9,6 +9,7 @@ import { Actions } from './actions';
 import { User } from '@/types';
 import { useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const permissions = [
   {
@@ -51,6 +52,9 @@ export default function Teams() {
         <div className="fixed h-16 bg-background top-0 inset-x-0 -z-10"></div>
         <div className="flex items-center gap-4">
           <h1 className="md:text-lg">Teams</h1>
+          <Button variant="secondary" size="sm" className="rounded-full bg-accent/15" asChild>
+            <Link href="/teams/add">Add User</Link>
+          </Button>
         </div>
       </div>
 

@@ -58,7 +58,7 @@ const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn('flex items-center gap-4 py-4 border-b border-accent/15', className)} {...props} />
+      <div ref={ref} className={cn('flex gap-4 py-4 border-b border-accent/15', className)} {...props} />
     </FormItemContext.Provider>
   );
 });
@@ -67,7 +67,7 @@ FormItem.displayName = 'FormItem';
 const FormLabel = React.forwardRef<React.ComponentRef<typeof LabelPrimitive.Root>, React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>>(({ className, ...props }, ref) => {
   const { error, formItemId } = useFormField();
 
-  return <Label ref={ref} className={cn('text-foreground/60', error && 'text-destructive', className)} htmlFor={formItemId} {...props} />;
+  return <Label ref={ref} className={cn('text-foreground/60 py-1.5', error && 'text-destructive', className)} htmlFor={formItemId} {...props} />;
 });
 FormLabel.displayName = 'FormLabel';
 
