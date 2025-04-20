@@ -16,40 +16,45 @@ export const TextToSpeech = ({ text }: TextToSpeechProps) => {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
   const [showControls, setShowControls] = useState(false);
+  const [isSpeechSupported, setIsSpeechSupported] = useState(true);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const voicesLoadedRef = useRef(false);
 
   const cleanText = stripMarkdown(text);
 
   useEffect(() => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) {
+      setIsSpeechSupported(false);
+      return;
+    }
+
     const loadVoices = () => {
-      const availableVoices = window.speechSynthesis.getVoices();
-      if (availableVoices.length > 0) {
-        setVoices(availableVoices);
+      try {
+        const availableVoices = window.speechSynthesis.getVoices();
+        if (availableVoices.length > 0) {
+          setVoices(availableVoices);
 
-        if (!voicesLoadedRef.current) {
-          // Try to find Google US English voice with more flexible matching
-          const googleUSVoice = availableVoices.find(voice => voice.name.toLowerCase().includes('google') && voice.lang.toLowerCase().includes('en-us'));
+          if (!voicesLoadedRef.current) {
+            const googleUSVoice = availableVoices.find(voice => voice.name.toLowerCase().includes('google') && voice.lang.toLowerCase().includes('en-us'));
 
-          // If no Google voice found, try to find any US English voice
-          const anyUSVoice = availableVoices.find(voice => voice.lang.toLowerCase().includes('en-us'));
+            const anyUSVoice = availableVoices.find(voice => voice.lang.toLowerCase().includes('en-us'));
 
-          // If still no voice found, use the first available voice
-          const defaultVoice = availableVoices[0];
+            const defaultVoice = availableVoices[0];
 
-          setSelectedVoice(googleUSVoice || anyUSVoice || defaultVoice);
-          voicesLoadedRef.current = true;
+            setSelectedVoice(googleUSVoice || anyUSVoice || defaultVoice);
+            voicesLoadedRef.current = true;
+          }
         }
+      } catch (error) {
+        console.error('Error loading voices:', error);
+        setIsSpeechSupported(false);
       }
     };
 
-    // Load voices immediately if they're already available
     loadVoices();
 
-    // Set up the voiceschanged event listener
     window.speechSynthesis.onvoiceschanged = loadVoices;
 
-    // Cleanup
     return () => {
       window.speechSynthesis.onvoiceschanged = null;
     };
@@ -64,10 +69,8 @@ export const TextToSpeech = ({ text }: TextToSpeechProps) => {
   }, []);
 
   const createUtterance = () => {
-    // Cancel any ongoing speech
     window.speechSynthesis.cancel();
 
-    // Wait a small amount of time to ensure the cancel operation is complete
     return new Promise<SpeechSynthesisUtterance>(resolve => {
       setTimeout(() => {
         const utterance = new SpeechSynthesisUtterance(cleanText);
@@ -138,22 +141,17 @@ export const TextToSpeech = ({ text }: TextToSpeechProps) => {
   const handleVoiceChange = async (voiceName: string) => {
     const voice = voices.find(v => v.name === voiceName);
     if (voice) {
-      // First pause any ongoing speech
       if (isPlaying) {
         window.speechSynthesis.pause();
         setIsPlaying(false);
       }
 
-      // Cancel any pending utterances
       window.speechSynthesis.cancel();
 
-      // Wait for the speech synthesis to fully stop
       await new Promise(resolve => setTimeout(resolve, 100));
 
-      // Update the selected voice
       setSelectedVoice(voice);
 
-      // If we were playing before, restart with the new voice
       if (isPlaying) {
         try {
           const utterance = await createUtterance();
@@ -169,6 +167,10 @@ export const TextToSpeech = ({ text }: TextToSpeechProps) => {
     setShowControls(true);
     togglePlayPause();
   };
+
+  if (!isSpeechSupported) {
+    return null;
+  }
 
   if (!showControls) {
     return (
