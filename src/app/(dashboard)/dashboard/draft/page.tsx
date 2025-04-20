@@ -1,7 +1,7 @@
 'use client';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useState, useEffect, useCallback } from 'react';
-import { cn, generateColor } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { formatDistance } from 'date-fns';
 import Image from 'next/image';
@@ -153,9 +153,9 @@ export default function Dashboard() {
                   onAfterDelete={handleAfterDelete}
                   className={{ base: 'absolute top-3 right-3 z-[1] text-white', open: 'opacity-0 invisible group-hover:opacity-100 group-hover:visible' }}
                 />
-                <figure className="h-40 md:h-56 relative overflow-hidden rounded-lg" style={{ backgroundColor: generateColor() }} suppressHydrationWarning>
+                <figure className="h-40 md:h-56 relative overflow-hidden rounded-lg bg-accent/5">
                   {draft.coverPhoto ? (
-                    <Image src={draft.coverPhoto} alt={draft.title} fill className="object-contain" />
+                    <Image src={draft.coverPhoto} alt={draft.title} fill className="object-cover" />
                   ) : (
                     <div className="w-full h-full bg-accent/5 flex items-center justify-center">
                       <p className="text-foreground/50">No cover image</p>

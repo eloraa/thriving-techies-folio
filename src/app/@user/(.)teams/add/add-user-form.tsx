@@ -95,7 +95,7 @@ export function AddUserForm() {
           control={form.control}
           name="avatar"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="items-center">
               <FormLabel className="w-[7rem]">Avatar</FormLabel>
               <div className="relative flex flex-col space-y-1 w-full">
                 <FormControl>
