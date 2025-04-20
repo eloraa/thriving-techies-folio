@@ -82,9 +82,14 @@ export const Nav = () => {
                 </DropdownMenuItem>
               ))}
               {fakeUser && (
-                <DropdownMenuItem>
-                  <Link href="/dashboard">Dashboard</Link>
-                </DropdownMenuItem>
+                <>
+                  <DropdownMenuItem>
+                    <Link href="/dashboard">Dashboard</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/login">Login</Link>
+                  </DropdownMenuItem>
+                </>
               )}
             </nav>
           </DropdownMenuContent>

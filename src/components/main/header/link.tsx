@@ -11,7 +11,7 @@ export const Link = ({ href, className, index, children }: { href: string; class
   //   const router = useRouter();
   const pathname = usePathname();
   const handleRouteChange = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (href.includes('/dashboard')) return;
+    if (href.includes('/dashboard') || href.includes('/login')) return;
     if (!links.some(link => link.href === pathname)) return;
     e.preventDefault();
     if (!href) return;
